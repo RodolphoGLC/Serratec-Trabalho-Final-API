@@ -32,7 +32,12 @@ public class CategoriaService {
 	
 	public Boolean deleteCategoria(Integer id) {
 		categoriaRepository.deleteById(id);
-		return true;
+		Categoria categoriaDeletada = categoriaRepository.findById(id).orElse(null);
+		if(categoriaDeletada == null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 }

@@ -25,31 +25,32 @@ public class PedidoController {
 
 	@GetMapping
 	public ResponseEntity<List<Pedido>> getAllPedidos() {
-		return new ResponseEntity<>(pedidoService.getAllPedidos(),HttpStatus.OK);
-		
-		
+		return new ResponseEntity<>(pedidoService.getAllPedidos(),HttpStatus.OK);	
 	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Pedido> getPedidoById(@PathVariable Integer id) {
 		return new ResponseEntity<>(pedidoService.getPedidoById(id),HttpStatus.OK);
-		
 	}
 	
 	@PostMapping
 	public ResponseEntity<Pedido> savePedido(@RequestBody Pedido pedido) {
 		return new ResponseEntity<>(pedidoService.savePedido(pedido),HttpStatus.CREATED);
-		
 	}
 	
 	@PutMapping
 	public ResponseEntity<Pedido> updatePedido(@RequestBody Pedido pedido,Integer id) {
 		return new ResponseEntity<>(pedidoService.savePedido(pedido),HttpStatus.CREATED);
-		
 	}
+	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Boolean> deletePedido(@PathVariable Integer id){
-		Boolean resp=pedidoService.deletePedido(id); 
-		return new ResponseEntity<>(resp,HttpStatus.OK);
+	public ResponseEntity<Boolean> deletePedido(@PathVariable Integer id) {
+		Boolean resp = pedidoService.deletePedido(id);
+		if(resp == true) {
+			return new ResponseEntity<>(resp,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(resp,HttpStatus.NOT_MODIFIED);
+		}
 	}
 	
 }

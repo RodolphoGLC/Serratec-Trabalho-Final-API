@@ -25,31 +25,32 @@ public class ClienteController {
 
 	@GetMapping
 	public ResponseEntity<List<Cliente>> getAllClientes() {
-		return new ResponseEntity<>(clienteService.getAllClientes(),HttpStatus.OK);
-		
-		
+		return new ResponseEntity<>(clienteService.getAllClientes(),HttpStatus.OK);	
 	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Cliente> getClienteById(@PathVariable Integer id) {
 		return new ResponseEntity<>(clienteService.getClienteById(id),HttpStatus.OK);
-		
 	}
 	
 	@PostMapping
 	public ResponseEntity<Cliente> saveCliente(@RequestBody Cliente cliente) {
-		return new ResponseEntity<>(clienteService.saveCliente(cliente),HttpStatus.CREATED);
-		
+		return new ResponseEntity<>(clienteService.saveCliente(cliente),HttpStatus.CREATED);		
 	}
 	
 	@PutMapping
 	public ResponseEntity<Cliente> updateCliente(@RequestBody Cliente cliente,Integer id) {
 		return new ResponseEntity<>(clienteService.saveCliente(cliente),HttpStatus.CREATED);
-		
 	}
+	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Boolean> deleteCliente(@PathVariable Integer id){
-		Boolean resp=clienteService.deleteCliente(id); 
-		return new ResponseEntity<>(resp,HttpStatus.OK);
+	public ResponseEntity<Boolean> deleteCliente(@PathVariable Integer id) {
+		Boolean resp = clienteService.deleteCliente(id);
+		if(resp == true) {
+			return new ResponseEntity<>(resp,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(resp,HttpStatus.NOT_MODIFIED);
+		}
 	}
 	
 }

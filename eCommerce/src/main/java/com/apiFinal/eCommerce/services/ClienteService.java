@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.Cliente;
+import com.apiFinal.eCommerce.entities.Cliente;
 import com.apiFinal.eCommerce.repositories.ClienteRepository;
 
 @Service
@@ -32,7 +33,12 @@ public class ClienteService {
 	
 	public Boolean deleteCliente(Integer id) {
 		clienteRepository.deleteById(id);
-		return true;
+		Cliente clienteDeletado = clienteRepository.findById(id).orElse(null);
+		if(clienteDeletado == null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 }

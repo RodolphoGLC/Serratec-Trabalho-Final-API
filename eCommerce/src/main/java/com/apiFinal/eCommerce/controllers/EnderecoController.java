@@ -25,31 +25,32 @@ public class EnderecoController {
 
 	@GetMapping
 	public ResponseEntity<List<Endereco>> getAllEnderecos() {
-		return new ResponseEntity<>(enderecoService.getAllEnderecos(),HttpStatus.OK);
-		
-		
+		return new ResponseEntity<>(enderecoService.getAllEnderecos(),HttpStatus.OK);	
 	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Endereco> getEnderecoById(@PathVariable Integer id) {
 		return new ResponseEntity<>(enderecoService.getEnderecoById(id),HttpStatus.OK);
-		
 	}
 	
 	@PostMapping
 	public ResponseEntity<Endereco> saveEndereco(@RequestBody Endereco endereco) {
 		return new ResponseEntity<>(enderecoService.saveEndereco(endereco),HttpStatus.CREATED);
-		
 	}
 	
 	@PutMapping
 	public ResponseEntity<Endereco> updateEndereco(@RequestBody Endereco endereco,Integer id) {
 		return new ResponseEntity<>(enderecoService.saveEndereco(endereco),HttpStatus.CREATED);
-		
 	}
+	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Boolean> deleteEndereco(@PathVariable Integer id){
-		Boolean resp=enderecoService.deleteEndereco(id); 
-		return new ResponseEntity<>(resp,HttpStatus.OK);
+	public ResponseEntity<Boolean> deleteEndereco(@PathVariable Integer id) {
+		Boolean resp = enderecoService.deleteEndereco(id);
+		if(resp == true) {
+			return new ResponseEntity<>(resp,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(resp,HttpStatus.NOT_MODIFIED);
+		}
 	}
 	
 }

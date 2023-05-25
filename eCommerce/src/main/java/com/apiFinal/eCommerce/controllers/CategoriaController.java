@@ -26,30 +26,31 @@ public class CategoriaController {
 	@GetMapping
 	public ResponseEntity<List<Categoria>> getAllCategorias() {
 		return new ResponseEntity<>(categoriaService.getAllCategorias(),HttpStatus.OK);
-		
-		
 	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> getCategoriaById(@PathVariable Integer id) {
-		return new ResponseEntity<>(categoriaService.getCategoriaById(id),HttpStatus.OK);
-		
+		return new ResponseEntity<>(categoriaService.getCategoriaById(id),HttpStatus.OK);	
 	}
 	
 	@PostMapping
 	public ResponseEntity<Categoria> saveCategoria(@RequestBody Categoria categoria) {
 		return new ResponseEntity<>(categoriaService.saveCategoria(categoria),HttpStatus.CREATED);
-		
 	}
 	
 	@PutMapping
 	public ResponseEntity<Categoria> updateCategoria(@RequestBody Categoria categoria,Integer id) {
 		return new ResponseEntity<>(categoriaService.saveCategoria(categoria),HttpStatus.CREATED);
-		
 	}
+	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Boolean> deleteCategoria(@PathVariable Integer id){
-		Boolean resp=categoriaService.deleteCategoria(id); 
-		return new ResponseEntity<>(resp,HttpStatus.OK);
+	public ResponseEntity<Boolean> deleteCategoria(@PathVariable Integer id) {
+		Boolean resp = categoriaService.deleteCategoria(id);
+		if(resp == true) {
+			return new ResponseEntity<>(resp,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(resp,HttpStatus.NOT_MODIFIED);
+		}
 	}
 	
 }

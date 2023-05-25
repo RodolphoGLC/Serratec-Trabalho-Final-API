@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.Produto;
+import com.apiFinal.eCommerce.entities.Produto;
 import com.apiFinal.eCommerce.repositories.ProdutoRepository;
 
 @Service
@@ -32,7 +33,12 @@ public class ProdutoService {
 	
 	public Boolean deleteProduto(Integer id) {
 		produtoRepository.deleteById(id);
-		return true;
+		Produto produtoDeletado = produtoRepository.findById(id).orElse(null);
+		if(produtoDeletado == null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 }

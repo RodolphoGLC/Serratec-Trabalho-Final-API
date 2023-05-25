@@ -26,30 +26,31 @@ public class ProdutoController {
 	@GetMapping
 	public ResponseEntity<List<Produto>> getAllProdutos() {
 		return new ResponseEntity<>(produtoService.getAllProdutos(),HttpStatus.OK);
-		
-		
 	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Produto> getProdutoById(@PathVariable Integer id) {
 		return new ResponseEntity<>(produtoService.getProdutoById(id),HttpStatus.OK);
-		
 	}
 	
 	@PostMapping
 	public ResponseEntity<Produto> saveProduto(@RequestBody Produto produto) {
 		return new ResponseEntity<>(produtoService.saveProduto(produto),HttpStatus.CREATED);
-		
 	}
 	
 	@PutMapping
 	public ResponseEntity<Produto> updateProduto(@RequestBody Produto produto,Integer id) {
 		return new ResponseEntity<>(produtoService.saveProduto(produto),HttpStatus.CREATED);
-		
 	}
+	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Boolean> deleteProduto(@PathVariable Integer id){
-		Boolean resp=produtoService.deleteProduto(id); 
-		return new ResponseEntity<>(resp,HttpStatus.OK);
+	public ResponseEntity<Boolean> deleteProduto(@PathVariable Integer id) {
+		Boolean resp = produtoService.deleteProduto(id);
+		if(resp == true) {
+			return new ResponseEntity<>(resp,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(resp,HttpStatus.NOT_MODIFIED);
+		}
 	}
 	
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.Endereco;
+import com.apiFinal.eCommerce.entities.Endereco;
 import com.apiFinal.eCommerce.repositories.EnderecoRepository;
 
 @Service
@@ -32,7 +33,12 @@ public class EnderecoService {
 	
 	public Boolean deleteEndereco(Integer id) {
 		enderecoRepository.deleteById(id);
-		return true;
+		Endereco enderecoDeletado = enderecoRepository.findById(id).orElse(null);
+		if(enderecoDeletado == null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 }

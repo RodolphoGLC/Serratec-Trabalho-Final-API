@@ -30,8 +30,9 @@ public class PedidoService {
 		return pedidoRepository.save(pedido);
 	}
 	
-	public void deletePedido(Integer id) {
+	public Boolean deletePedido(Integer id) {
 		pedidoRepository.deleteById(id);
+		return true;
 	}
 	
 }

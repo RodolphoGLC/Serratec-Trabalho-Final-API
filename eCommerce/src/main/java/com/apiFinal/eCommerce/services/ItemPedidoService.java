@@ -30,8 +30,9 @@ public class ItemPedidoService {
 		return itemPedidoRepository.save(itemPedido);
 	}
 	
-	public void deleteItemPedido(Integer id) {
+	public Boolean deleteItemPedido(Integer id) {
 		itemPedidoRepository.deleteById(id);
+		return true;
 	}
 	
 }

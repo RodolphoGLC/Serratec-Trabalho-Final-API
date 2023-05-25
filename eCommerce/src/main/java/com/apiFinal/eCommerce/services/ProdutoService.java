@@ -30,8 +30,9 @@ public class ProdutoService {
 		return produtoRepository.save(produto);
 	}
 	
-	public void deleteProduto(Integer id) {
+	public Boolean deleteProduto(Integer id) {
 		produtoRepository.deleteById(id);
+		return true;
 	}
 	
 }

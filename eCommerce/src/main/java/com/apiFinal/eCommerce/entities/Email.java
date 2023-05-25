@@ -17,13 +17,13 @@ import jakarta.persistence.Table;
 //@Data
 @Entity
 @Table(name = "email")
-public class EmailModel implements Serializable {
+public class Email implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
-	private UUID emailId;
+	private Long emailId;
 
 	@Column(name = "owner_ref")
 	// para ser mais facil a filtragem, o propietario
@@ -50,11 +50,11 @@ public class EmailModel implements Serializable {
 	@Column(name = "status_email")
 	private StatusEmail statusEmail;
 
-	public EmailModel() {
+	public Email() {
 		super();
 	}
 
-	public EmailModel(UUID emailId, String ownerRef, String emailFrom, String emailTo, String subject, String text,
+	public Email(Long emailId, String ownerRef, String emailFrom, String emailTo, String subject, String text,
 			LocalDateTime sendDateEmail, StatusEmail statusEmail) {
 		super();
 		this.emailId = emailId;
@@ -67,11 +67,11 @@ public class EmailModel implements Serializable {
 		this.statusEmail = statusEmail;
 	}
 
-	public UUID getEmailId() {
+	public Long getEmailId() {
 		return emailId;
 	}
 
-	public void setEmailId(UUID emailId) {
+	public void setEmailId(Long emailId) {
 		this.emailId = emailId;
 	}
 

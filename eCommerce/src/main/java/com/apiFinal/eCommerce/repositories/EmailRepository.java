@@ -2,8 +2,8 @@ package com.apiFinal.eCommerce.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.apiFinal.eCommerce.entities.EmailModel;
+import jakarta.validation.constraints.Email;
 
-public interface EmailRepository extends JpaRepository<EmailModel, Long>{
+public interface EmailRepository extends JpaRepository<Email, Long>{
 
 }

@@ -27,13 +27,13 @@ public class EmailController {
 	EmailService emailService;
 
 	@PostMapping("/email")
-	public ResponseEntity<Email> enciandoEmail(@RequestBody @Valid EmailDTO emailDto) {
+	public ResponseEntity<Email> saveEmail(@RequestBody @Valid EmailDTO emailDto) {
 		Email email = new Email();
 		BeanUtils.copyProperties(emailDto, email);
 		emailService.saveEmail(email);
 		return new ResponseEntity<>(email, HttpStatus.CREATED);
 	}
-
+/*
 	@GetMapping
 	public ResponseEntity<List<Email>> getAllEmails() {
 		return new ResponseEntity<>(emailService.getAllEmails(), HttpStatus.OK);
@@ -59,6 +59,6 @@ public class EmailController {
 			return new ResponseEntity<>(resp,HttpStatus.NOT_MODIFIED);
 		}
 	}
-	
+	*/
 	
 }

@@ -52,7 +52,7 @@ public class EmailService {
 			return emailRepository.save(email);
 		}
 	}
-
+/*
 	public List<Email> getAllEmails() {
 		return emailRepository.findAll(Email);
 	}
@@ -76,6 +76,6 @@ public class EmailService {
 	}
 	
 }
-
+*/
 
 }

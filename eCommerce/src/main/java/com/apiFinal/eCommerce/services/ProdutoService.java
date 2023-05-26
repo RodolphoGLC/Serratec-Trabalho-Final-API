@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.Produto;
+import com.apiFinal.eCommerce.exceptions.UniqueElementException;
 import com.apiFinal.eCommerce.repositories.ProdutoRepository;
 
 @Service
@@ -23,7 +24,11 @@ public class ProdutoService {
 	}
 	
 	public Produto saveProduto(Produto produto) {
-		return produtoRepository.save(produto);
+		try {
+			return produtoRepository.save(produto);		
+		} catch (Exception e) {
+			throw new UniqueElementException();
+		}
 	}
 	
 	public Produto updateProduto(Produto produto) {

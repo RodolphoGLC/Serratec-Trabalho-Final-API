@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.Pedido;
+import com.apiFinal.eCommerce.exceptions.UniqueElementException;
 import com.apiFinal.eCommerce.repositories.PedidoRepository;
 
 @Service
@@ -23,7 +24,11 @@ public class PedidoService {
 	}
 	
 	public Pedido savePedido(Pedido pedido) {
-		return pedidoRepository.save(pedido);
+		try {
+			return pedidoRepository.save(pedido);		
+		} catch (Exception e) {
+			throw new UniqueElementException();
+		}
 	}
 	
 	public Pedido updatePedido(Pedido pedido) {

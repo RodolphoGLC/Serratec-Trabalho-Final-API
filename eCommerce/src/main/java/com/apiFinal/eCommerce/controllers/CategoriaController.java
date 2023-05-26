@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apiFinal.eCommerce.entities.Categoria;
+import com.apiFinal.eCommerce.exceptions.IncompleteArgumentException;
 import com.apiFinal.eCommerce.services.CategoriaService;
 
 import jakarta.validation.Valid;
@@ -37,12 +38,12 @@ public class CategoriaController {
 	
 	@PostMapping
 	public ResponseEntity<Categoria> saveCategoria(@Valid @RequestBody Categoria categoria) {
-		return new ResponseEntity<>(categoriaService.saveCategoria(categoria),HttpStatus.CREATED);
+		return new ResponseEntity<>(categoriaService.saveCategoria(categoria),HttpStatus.CREATED);		
 	}
 	
 	@PutMapping
-	public ResponseEntity<Categoria> updateCategoria(@Valid @RequestBody Categoria categoria, @Valid Integer id) {
-		return new ResponseEntity<>(categoriaService.saveCategoria(categoria),HttpStatus.CREATED);
+	public ResponseEntity<Categoria> updateCategoria(@Valid @RequestBody Categoria categoria) {
+		return new ResponseEntity<>(categoriaService.updateCategoria(categoria),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")

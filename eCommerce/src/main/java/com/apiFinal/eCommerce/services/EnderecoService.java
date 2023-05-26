@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.Endereco;
+import com.apiFinal.eCommerce.exceptions.UniqueElementException;
 import com.apiFinal.eCommerce.repositories.EnderecoRepository;
 
 @Service
@@ -23,7 +24,11 @@ public class EnderecoService {
 	}
 	
 	public Endereco saveEndereco(Endereco endereco) {
-		return enderecoRepository.save(endereco);
+		try {
+			return enderecoRepository.save(endereco);		
+		} catch (Exception e) {
+			throw new UniqueElementException();
+		}
 	}
 	
 	public Endereco updateEndereco(Endereco endereco) {

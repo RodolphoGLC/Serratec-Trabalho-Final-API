@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.Categoria;
+import com.apiFinal.eCommerce.exceptions.UniqueElementException;
+import com.apiFinal.eCommerce.exceptions.UnmatchingIdsException;
 import com.apiFinal.eCommerce.repositories.CategoriaRepository;
 
 @Service
@@ -23,20 +25,41 @@ public class CategoriaService {
 	}
 	
 	public Categoria saveCategoria(Categoria categoria) {
-		return categoriaRepository.save(categoria);
+		if (categoria.getIdCategoria() == null) {
+			try {
+				return categoriaRepository.save(categoria);		
+			} catch (Exception e) {
+				throw new UniqueElementException();
+			}			
+		} else {
+			throw new UnmatchingIdsException(categoria.getIdCategoria(), categoria.getNome());
+		}
 	}
 	
 	public Categoria updateCategoria(Categoria categoria) {
-		return categoriaRepository.save(categoria);
+		Integer id = categoria.getIdCategoria();
+		if (id == null) {
+			throw new UnmatchingIdsException();
+		} else {
+			if (categoriaRepository.findById(id).orElse(null) != null) {
+				try {
+					return categoriaRepository.save(categoria);		
+				} catch (Exception e) {
+					throw new UniqueElementException();
+				}					
+			} else {
+				throw new UnmatchingIdsException(id);
+			}
+		}
 	}
 	
 	public Boolean deleteCategoria(Integer id) {
-		categoriaRepository.deleteById(id);
 		Categoria categoriaDeletada = categoriaRepository.findById(id).orElse(null);
-		if(categoriaDeletada == null) {
+		if(categoriaDeletada != null) {
+			categoriaRepository.deleteById(id);
 			return true;
 		} else {
-			return false;
+			throw new UnmatchingIdsException(id);
 		}
 	}
 	

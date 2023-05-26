@@ -37,10 +37,10 @@ public class ItemPedido {
 	private double porcentagemDesconto;
 	
 	@Column(name = "valor_bruto")
-	private double valorBruto = quantidade * precoVenda;
+	private double valorBruto;
 	
 	@Column(name = "valor_liquido")
-	private double valorLiquido = valorBruto / porcentagemDesconto;
+	private double valorLiquido;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido", unique = true)

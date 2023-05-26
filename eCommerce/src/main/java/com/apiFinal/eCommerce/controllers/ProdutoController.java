@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apiFinal.eCommerce.entities.Produto;
 import com.apiFinal.eCommerce.services.ProdutoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
@@ -29,22 +31,22 @@ public class ProdutoController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Produto> getProdutoById(@PathVariable Integer id) {
+	public ResponseEntity<Produto> getProdutoById(@Valid @PathVariable Integer id) {
 		return new ResponseEntity<>(produtoService.getProdutoById(id),HttpStatus.OK);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Produto> saveProduto(@RequestBody Produto produto) {
+	public ResponseEntity<Produto> saveProduto(@Valid @RequestBody Produto produto) {
 		return new ResponseEntity<>(produtoService.saveProduto(produto),HttpStatus.CREATED);
 	}
 	
 	@PutMapping
-	public ResponseEntity<Produto> updateProduto(@RequestBody Produto produto,Integer id) {
+	public ResponseEntity<Produto> updateProduto(@Valid @RequestBody Produto produto, @Valid Integer id) {
 		return new ResponseEntity<>(produtoService.saveProduto(produto),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Boolean> deleteProduto(@PathVariable Integer id) {
+	public ResponseEntity<Boolean> deleteProduto(@Valid @PathVariable Integer id) {
 		Boolean resp = produtoService.deleteProduto(id);
 		if(resp == true) {
 			return new ResponseEntity<>(resp,HttpStatus.OK);

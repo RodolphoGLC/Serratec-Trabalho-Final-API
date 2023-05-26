@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCliente", scope = Cliente.class)
 @Entity
@@ -26,23 +27,26 @@ public class Cliente {
 	@Column(name = "id_cliente")
 	private Integer idCliente;
 	
-	//Unique
-	@Column(name = "email")
+	@NotNull
+	@Column(name = "email", unique = true)
 	private String email;
 	
-	//Unique
-	@Column(name = "cpf")
+	@NotNull
+	@Column(name = "cpf", unique = true)
 	private String cpf;
 	
+	@NotNull
 	@Column(name = "telefone")
 	private String telefone;
 	
+	//Deve ser anterior a data atual
+	@NotNull
 	@Column(name = "data_nascimento")
 	private Date dataNascimento;
 
 	//FK - Endereço - unique = true
 	@OneToOne
-	@JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
+	@JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco", unique = true)
 	private Endereco endereco;
 	
 	//FK Cliente Pedido

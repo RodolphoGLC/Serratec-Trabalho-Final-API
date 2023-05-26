@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apiFinal.eCommerce.entities.Cliente;
 import com.apiFinal.eCommerce.services.ClienteService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
@@ -29,22 +31,22 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Cliente> getClienteById(@PathVariable Integer id) {
+	public ResponseEntity<Cliente> getClienteById(@Valid @PathVariable Integer id) {
 		return new ResponseEntity<>(clienteService.getClienteById(id),HttpStatus.OK);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Cliente> saveCliente(@RequestBody Cliente cliente) {
+	public ResponseEntity<Cliente> saveCliente(@Valid @RequestBody Cliente cliente) {
 		return new ResponseEntity<>(clienteService.saveCliente(cliente),HttpStatus.CREATED);		
 	}
 	
 	@PutMapping
-	public ResponseEntity<Cliente> updateCliente(@RequestBody Cliente cliente,Integer id) {
+	public ResponseEntity<Cliente> updateCliente(@Valid @RequestBody Cliente cliente, @Valid Integer id) {
 		return new ResponseEntity<>(clienteService.saveCliente(cliente),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Boolean> deleteCliente(@PathVariable Integer id) {
+	public ResponseEntity<Boolean> deleteCliente(@Valid @PathVariable Integer id) {
 		Boolean resp = clienteService.deleteCliente(id);
 		if(resp == true) {
 			return new ResponseEntity<>(resp,HttpStatus.OK);

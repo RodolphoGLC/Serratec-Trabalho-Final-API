@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPedido", scope = Pedido.class)
 @Entity
@@ -26,23 +27,29 @@ public class Pedido {
 	@Column(name = "id_pedido")
 	private Integer idPedido;
 	
+	//O dia e a hora da realização do pedido
 	@Column(name = "data_pedido")
-	private Date dataPedido;
+	private Date dataPedido = new Date();
 	
+	//Deve haver a condição que seja depois da data de envio
 	@Column(name = "data_entrega")
 	private Date dataEntrega;
 	
+	//Deve haver a condição que seja depois da data do pedido
 	@Column(name = "data_envio")
 	private Date dataEnvio;
 	
+	@NotNull
 	@Column(name = "status")
 	private String status;
 	
+	@NotNull
 	@Column(name = "valor_total")
 	private double valorTotal;
 	
+	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
+	@JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente", unique = true)
 	private Cliente cliente;
 	
 	@OneToMany(mappedBy = "pedido")

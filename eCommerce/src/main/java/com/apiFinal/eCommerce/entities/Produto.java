@@ -15,6 +15,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idProduto", scope = Produto.class)
 @Entity
@@ -26,21 +28,27 @@ public class Produto {
 	@Column(name = "id_produto")
 	private Integer idProduto;
 	
+	@NotBlank
 	@Column(name = "nome")
 	private String nome;
 	
-	//unique
-	@Column(name = "descricao")
+	@NotBlank
+	@Column(name = "descricao", unique = true)
 	private String descricao;
 	
+	@NotBlank
+	@Min(0)
 	@Column(name = "qtdEstoque")
 	private Integer qtdEstoque;
 	
+	//tem que ser o dia e a hora que for cadastrado
 	@Column(name = "data_cadastro")
 	private Date dataCadastro;
 	
+	@NotBlank
+	@Min(0)
 	@Column(name = "valor_unitario")
-	private double valorUnitario;
+	private Double valorUnitario;
 	
 	//Imagem, tenho que pesquisar
 	
@@ -48,6 +56,7 @@ public class Produto {
 	private List<ItemPedido> itemPedido;
 	
 	@ManyToOne
+	@NotBlank
 	@JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
 	private Categoria categoria;
 

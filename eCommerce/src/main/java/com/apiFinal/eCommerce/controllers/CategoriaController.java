@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apiFinal.eCommerce.entities.Categoria;
 import com.apiFinal.eCommerce.services.CategoriaService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaController {
@@ -29,22 +31,22 @@ public class CategoriaController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> getCategoriaById(@PathVariable Integer id) {
+	public ResponseEntity<Categoria> getCategoriaById(@Valid @PathVariable Integer id) {
 		return new ResponseEntity<>(categoriaService.getCategoriaById(id),HttpStatus.OK);	
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> saveCategoria(@RequestBody Categoria categoria) {
+	public ResponseEntity<Categoria> saveCategoria(@Valid @RequestBody Categoria categoria) {
 		return new ResponseEntity<>(categoriaService.saveCategoria(categoria),HttpStatus.CREATED);
 	}
 	
 	@PutMapping
-	public ResponseEntity<Categoria> updateCategoria(@RequestBody Categoria categoria,Integer id) {
+	public ResponseEntity<Categoria> updateCategoria(@Valid @RequestBody Categoria categoria, @Valid Integer id) {
 		return new ResponseEntity<>(categoriaService.saveCategoria(categoria),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Boolean> deleteCategoria(@PathVariable Integer id) {
+	public ResponseEntity<Boolean> deleteCategoria(@Valid @PathVariable Integer id) {
 		Boolean resp = categoriaService.deleteCategoria(id);
 		if(resp == true) {
 			return new ResponseEntity<>(resp,HttpStatus.OK);

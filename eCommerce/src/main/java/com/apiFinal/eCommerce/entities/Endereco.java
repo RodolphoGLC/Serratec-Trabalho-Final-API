@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idEndereco", scope = Endereco.class)
 @Entity
@@ -21,6 +22,7 @@ public class Endereco {
 	@Column(name = "id_endereco")
 	private Integer idEndereco;
 	
+	@NotNull
 	@Column(name = "cep")
 	private String cep;
 	
@@ -33,15 +35,17 @@ public class Endereco {
 	@Column(name = "cidade")
 	private String cidade;
 	
+	@Column(name = "uf")
+	private String uf;
+	
+	@NotNull
 	@Column(name = "numero")
 	private String numero;
 	
 	@Column(name = "complemento")
 	private String complemento;
 	
-	@Column(name = "uf")
-	private String uf;
-
+	@NotNull
 	@OneToOne(mappedBy = "endereco")
 	private Cliente cliente;
 

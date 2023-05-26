@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apiFinal.eCommerce.entities.Pedido;
 import com.apiFinal.eCommerce.services.PedidoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/pedidos")
 public class PedidoController {
@@ -29,22 +31,22 @@ public class PedidoController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Pedido> getPedidoById(@PathVariable Integer id) {
+	public ResponseEntity<Pedido> getPedidoById(@Valid @PathVariable Integer id) {
 		return new ResponseEntity<>(pedidoService.getPedidoById(id),HttpStatus.OK);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Pedido> savePedido(@RequestBody Pedido pedido) {
+	public ResponseEntity<Pedido> savePedido(@Valid @RequestBody Pedido pedido) {
 		return new ResponseEntity<>(pedidoService.savePedido(pedido),HttpStatus.CREATED);
 	}
 	
 	@PutMapping
-	public ResponseEntity<Pedido> updatePedido(@RequestBody Pedido pedido,Integer id) {
+	public ResponseEntity<Pedido> updatePedido(@Valid @RequestBody Pedido pedido, @Valid Integer id) {
 		return new ResponseEntity<>(pedidoService.savePedido(pedido),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Boolean> deletePedido(@PathVariable Integer id) {
+	public ResponseEntity<Boolean> deletePedido(@Valid @PathVariable Integer id) {
 		Boolean resp = pedidoService.deletePedido(id);
 		if(resp == true) {
 			return new ResponseEntity<>(resp,HttpStatus.OK);

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.Produto;
-import com.apiFinal.eCommerce.entities.Produto;
 import com.apiFinal.eCommerce.repositories.ProdutoRepository;
 
 @Service

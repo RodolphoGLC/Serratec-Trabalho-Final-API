@@ -29,6 +29,7 @@ public class Produto {
 	@Column(name = "nome")
 	private String nome;
 	
+	//unique
 	@Column(name = "descricao")
 	private String descricao;
 	

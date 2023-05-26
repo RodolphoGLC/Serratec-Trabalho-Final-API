@@ -1,34 +1,51 @@
 package com.apiFinal.eCommerce.services;
 
-import java.awt.print.Pageable;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.mail.MailException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-import com.apiFinal.eCommerce.entities.Email;
-import com.apiFinal.eCommerce.enums.StatusEmail;
-import com.apiFinal.eCommerce.repositories.EmailRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class EmailService {
 
 	@Autowired
-	EmailRepository emailRepository;
-
-	//adiocionado nas dependencias
-	@Autowired
 	private JavaMailSender emailSender;
-
+	
+	@Value("${spring.mail.host}")
+    private String mailHost;
+    
+    @Value("${spring.mail.port}")
+    private String mailPort;
+    
+    @Value("${spring.mail.username}")
+    private String userName;
+    
+    @Value("${spring.mail.password}")
+    private String password;
+    
+    @Value("${mail.from}")
+    private String mailFrom;
+    
+    public EmailService(JavaMailSender javaMailSender) {
+        this.emailSender = javaMailSender;
+    }
+	
+	public void enviarEmail(String destinatario, String assunto, String mensagem) {
+        var mailMessage = new SimpleMailMessage();
+        
+        mailMessage.setTo(destinatario);
+        mailMessage.setSubject(assunto);
+        mailMessage.setText(mensagem);
+        mailMessage.setFrom(mailFrom);
+        
+        try {
+            emailSender.send(mailMessage);
+        }catch(Exception ex) {
+            System.out.println("Ocorreu um erro ao tentar enviar o e-mail: " + ex.getMessage());
+        }
+    }
+	/*
 	@Transactional
 	public Email saveEmail(Email email) {
 		email.setSendDateEmail(LocalDateTime.now());
@@ -51,7 +68,7 @@ public class EmailService {
 		} finally {
 			return emailRepository.save(email);
 		}
-	}
+	}*/
 /*
 	public List<Email> getAllEmails() {
 		return emailRepository.findAll(Email);

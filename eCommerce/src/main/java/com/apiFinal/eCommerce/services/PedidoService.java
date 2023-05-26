@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.Pedido;
 import com.apiFinal.eCommerce.exceptions.UniqueElementException;
+import com.apiFinal.eCommerce.exceptions.UnmatchingIdsException;
 import com.apiFinal.eCommerce.repositories.PedidoRepository;
 
 @Service
 public class PedidoService {
+
 
 	@Autowired
 	PedidoRepository pedidoRepository;
@@ -24,24 +26,41 @@ public class PedidoService {
 	}
 	
 	public Pedido savePedido(Pedido pedido) {
-		try {
-			return pedidoRepository.save(pedido);		
-		} catch (Exception e) {
-			throw new UniqueElementException();
+		if (pedido.getIdPedido() == null) {
+			try {
+				return pedidoRepository.save(pedido);		
+			} catch (Exception e) {
+				throw new UniqueElementException();
+			}			
+		} else {
+			throw new UnmatchingIdsException(pedido.getIdPedido(), pedido.getStatus());
 		}
 	}
 	
 	public Pedido updatePedido(Pedido pedido) {
-		return pedidoRepository.save(pedido);
+		Integer id = pedido.getIdPedido();
+		if (id == null) {
+			throw new UnmatchingIdsException();
+		} else {
+			if (pedidoRepository.findById(id).orElse(null) != null) {
+				try {
+					return pedidoRepository.save(pedido);		
+				} catch (Exception e) {
+					throw new UniqueElementException();
+				}					
+			} else {
+				throw new UnmatchingIdsException(id);
+			}
+		}
 	}
 	
 	public Boolean deletePedido(Integer id) {
-		pedidoRepository.deleteById(id);
-		Pedido pedidoDeletado = pedidoRepository.findById(id).orElse(null);
-		if(pedidoDeletado == null) {
+		Pedido pedidoDeletada = pedidoRepository.findById(id).orElse(null);
+		if(pedidoDeletada != null) {
+			pedidoRepository.deleteById(id);
 			return true;
 		} else {
-			return false;
+			throw new UnmatchingIdsException(id);
 		}
 	}
 	

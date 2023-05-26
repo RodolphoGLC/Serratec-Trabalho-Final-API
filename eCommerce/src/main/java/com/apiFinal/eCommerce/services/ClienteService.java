@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.Cliente;
 import com.apiFinal.eCommerce.exceptions.UniqueElementException;
+import com.apiFinal.eCommerce.exceptions.UnmatchingIdsException;
 import com.apiFinal.eCommerce.repositories.ClienteRepository;
 
 @Service
@@ -14,35 +15,52 @@ public class ClienteService {
 
 	@Autowired
 	ClienteRepository clienteRepository;
-	
+
 	public List<Cliente> getAllClientes() {
 		return clienteRepository.findAll();
 	}
-	
+
 	public Cliente getClienteById(Integer id) {
 		return clienteRepository.findById(id).orElse(null);
 	}
-	
+
 	public Cliente saveCliente(Cliente cliente) {
-		try {
-			return clienteRepository.save(cliente);		
-		} catch (Exception e) {
-			throw new UniqueElementException();
+		if (cliente.getIdCliente() == null) {
+			try {
+				return clienteRepository.save(cliente);
+			} catch (Exception e) {
+				throw new UniqueElementException();
+			}
+		} else {
+			throw new UnmatchingIdsException(cliente.getIdCliente(), cliente.getCpf());
 		}
 	}
-	
+
 	public Cliente updateCliente(Cliente cliente) {
-		return clienteRepository.save(cliente);
+		Integer id = cliente.getIdCliente();
+		if (id == null) {
+			throw new UnmatchingIdsException();
+		} else {
+			if (clienteRepository.findById(id).orElse(null) != null) {
+				try {
+					return clienteRepository.save(cliente);
+				} catch (Exception e) {
+					throw new UniqueElementException();
+				}
+			} else {
+				throw new UnmatchingIdsException(id);
+			}
+		}
 	}
-	
+
 	public Boolean deleteCliente(Integer id) {
-		clienteRepository.deleteById(id);
-		Cliente clienteDeletado = clienteRepository.findById(id).orElse(null);
-		if(clienteDeletado == null) {
+		Cliente clienteDeletada = clienteRepository.findById(id).orElse(null);
+		if (clienteDeletada != null) {
+			clienteRepository.deleteById(id);
 			return true;
 		} else {
-			return false;
+			throw new UnmatchingIdsException(id);
 		}
 	}
-	
+
 }

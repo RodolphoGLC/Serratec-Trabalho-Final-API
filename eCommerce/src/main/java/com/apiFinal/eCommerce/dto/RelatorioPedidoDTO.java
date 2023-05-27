@@ -68,13 +68,13 @@ public class RelatorioPedidoDTO {
 					"\n==========================================";
 		
 		for(ItemPedidoDTO itemPedido : listaItems) {
-			mensagem += "\nId do item: " + itemPedido.getIdItemPedido() +
-					    "\nNome do item: " + itemPedido.getNomeProduto() + 
-					    "\nPreço ienda: " + itemPedido.getPrecoVenda() + 
-					    "\nQuantidade do item: " + itemPedido.getQuantidade() +
-					    "\nValor bruto do item: " + itemPedido.getValorBruto() +
+			mensagem += "\nId do produto: " + itemPedido.getIdProduto() +
+					    "\nNome do produto: " + itemPedido.getNomeProduto() + 
+					    "\nPreço venda: " + itemPedido.getPrecoVenda() + 
+					    "\nQuantidade do produto: " + itemPedido.getQuantidade() +
+					    "\nValor bruto do produto: " + itemPedido.getValorBruto() +
 					    "\nPercentual de desconto: " + itemPedido.getPercentualDesconto() +
-					    "\nValor líquido do item: " + itemPedido.getValorLiquido() +
+					    "\nValor líquido do produto: " + itemPedido.getValorLiquido() +
 					    "\n-----------------------------------------------------------";
 		}
 		

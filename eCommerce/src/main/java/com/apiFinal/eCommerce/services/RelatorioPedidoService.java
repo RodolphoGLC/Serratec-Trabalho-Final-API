@@ -7,7 +7,6 @@ import com.apiFinal.eCommerce.dto.ItemPedidoDTO;
 import com.apiFinal.eCommerce.dto.RelatorioPedidoDTO;
 import com.apiFinal.eCommerce.entities.ItemPedido;
 import com.apiFinal.eCommerce.entities.Pedido;
-import com.apiFinal.eCommerce.entities.Produto;
 
 public class RelatorioPedidoService {
 	
@@ -24,16 +23,13 @@ public class RelatorioPedidoService {
 		for(ItemPedido itemPedido : pedido.getListaItemPedido()) {
 			ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO();
 			
-			itemPedidoDTO.setIdItemPedido(itemPedido.getIdItemPedido());
+			itemPedidoDTO.setIdProduto(itemPedido.getProduto().getIdProduto());
 			itemPedidoDTO.setQuantidade(itemPedido.getQuantidade());
 			itemPedidoDTO.setValorBruto(itemPedido.getValorBruto());
 			itemPedidoDTO.setPercentualDesconto(itemPedido.getPorcentagemDesconto());
 			itemPedidoDTO.setValorLiquido(itemPedido.getValorLiquido());
-		
-			Produto produto = new Produto();
-			
-			itemPedidoDTO.setNomeProduto(produto.getNome());
-			itemPedidoDTO.setPrecoVenda(produto.getValorUnitario());
+			itemPedidoDTO.setNomeProduto(itemPedido.getProduto().getNome());
+			itemPedidoDTO.setPrecoVenda(itemPedido.getProduto().getValorUnitario());
 			
 			listaItemPedido.add(itemPedidoDTO);
 		}

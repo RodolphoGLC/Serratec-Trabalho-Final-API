@@ -3,7 +3,7 @@ package com.apiFinal.eCommerce.dto;
 public class ItemPedidoDTO {
 	//Itens Pedido
 	
-	private Integer idItemPedido;
+	private Integer idProduto;
 	private String nomeProduto;
 	private Double precoVenda;
 	private Integer quantidade;
@@ -11,10 +11,10 @@ public class ItemPedidoDTO {
 	private Double percentualDesconto;
 	private Double valorLiquido;
 	
-	public ItemPedidoDTO(Integer idItemPedido, String nomeProduto, Double precoVenda, Integer quantidade,
+	public ItemPedidoDTO(Integer idProduto, String nomeProduto, Double precoVenda, Integer quantidade,
 			Double valorBruto, Double percentualDesconto, Double valorLiquido) {
 		super();
-		this.idItemPedido = idItemPedido;
+		this.idProduto = idProduto;
 		this.nomeProduto = nomeProduto;
 		this.precoVenda = precoVenda;
 		this.quantidade = quantidade;
@@ -27,11 +27,11 @@ public class ItemPedidoDTO {
 		super();
 	}
 	
-	public Integer getIdItemPedido() {
-		return idItemPedido;
+	public Integer getIdProduto() {
+		return idProduto;
 	}
-	public void setIdItemPedido(Integer idItemPedido) {
-		this.idItemPedido = idItemPedido;
+	public void setIdProduto(Integer idProduto) {
+		this.idProduto = idProduto;
 	}
 	public String getNomeProduto() {
 		return nomeProduto;

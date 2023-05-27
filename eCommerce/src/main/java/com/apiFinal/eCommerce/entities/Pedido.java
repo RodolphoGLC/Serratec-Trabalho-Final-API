@@ -43,7 +43,6 @@ public class Pedido {
 	@Column(name = "status")
 	private String status;
 	
-	@NotNull
 	@Column(name = "valor_total")
 	private double valorTotal;
 	

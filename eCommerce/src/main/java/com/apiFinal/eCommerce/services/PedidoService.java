@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.apiFinal.eCommerce.dto.RelatorioPedidoDTO;
 import com.apiFinal.eCommerce.entities.Pedido;
 import com.apiFinal.eCommerce.exceptions.UniqueElementException;
 import com.apiFinal.eCommerce.exceptions.UnmatchingIdsException;
@@ -13,9 +14,14 @@ import com.apiFinal.eCommerce.repositories.PedidoRepository;
 @Service
 public class PedidoService {
 
-
 	@Autowired
 	PedidoRepository pedidoRepository;
+	
+	@Autowired
+	EmailService emailService;
+	
+	@Autowired
+	RelatorioPedidoService relatorioPedidoService;
 	
 	public List<Pedido> getAllPedidos() {
 		return pedidoRepository.findAll();
@@ -28,10 +34,13 @@ public class PedidoService {
 	public Pedido savePedido(Pedido pedido) {
 		if (pedido.getIdPedido() == null) {
 			try {
+				//Sem tratamento a parte do e-mail
+				RelatorioPedidoDTO relatorio = relatorioPedidoService.gerarRelatorio(pedido);
+				emailService.enviarEmail(pedido.getCliente().getEmail(), "Nota fiscal do pedido", relatorio.notaFiscal());
 				return pedidoRepository.save(pedido);		
 			} catch (Exception e) {
 				throw new UniqueElementException();
-			}			
+			}
 		} else {
 			throw new UnmatchingIdsException(pedido.getIdPedido(), pedido.getStatus());
 		}

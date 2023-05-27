@@ -3,8 +3,6 @@ package com.apiFinal.eCommerce.dto;
 import java.util.Date;
 import java.util.List;
 
-import com.apiFinal.eCommerce.entities.ItemPedido;
-
 public class RelatorioPedidoDTO {
 	
 	//Pedido
@@ -57,5 +55,29 @@ public class RelatorioPedidoDTO {
 
 	public void setListaItems(List<ItemPedidoDTO> listaItems) {
 		this.listaItems = listaItems;
+	}
+
+	public String notaFiscal() {
+		
+		String mensagem = "";
+		
+		mensagem += "==========================================" +
+					"\nId do pedido: " + idPedido +
+					"\nData do pedido: " + dataPedido + 
+					"\nValor total: " + valorTotal + 
+					"\n==========================================";
+		
+		for(ItemPedidoDTO itemPedido : listaItems) {
+			mensagem += "\nId do item: " + itemPedido.getIdItemPedido() +
+					    "\nNome do item: " + itemPedido.getNomeProduto() + 
+					    "\nPreço ienda: " + itemPedido.getPrecoVenda() + 
+					    "\nQuantidade do item: " + itemPedido.getQuantidade() +
+					    "\nValor bruto do item: " + itemPedido.getValorBruto() +
+					    "\nPercentual de desconto: " + itemPedido.getPercentualDesconto() +
+					    "\nValor líquido do item: " + itemPedido.getValorLiquido() +
+					    "\n-----------------------------------------------------------";
+		}
+		
+		return mensagem;
 	}
 }

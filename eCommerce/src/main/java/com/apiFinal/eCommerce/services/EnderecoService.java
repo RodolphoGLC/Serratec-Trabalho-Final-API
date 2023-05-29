@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.apiFinal.eCommerce.dto.APIEnderecoDTO;
 import com.apiFinal.eCommerce.entities.Endereco;
 import com.apiFinal.eCommerce.exceptions.NoSuchElementException;
 import com.apiFinal.eCommerce.exceptions.UniqueElementException;
@@ -16,7 +17,10 @@ public class EnderecoService {
 
 	@Autowired
 	EnderecoRepository enderecoRepository;
-
+	
+	@Autowired
+	APIEnderecoDTO apiEnderecoDTO;
+	
 	public List<Endereco> getAllEnderecos() {
 		return enderecoRepository.findAll();
 	}
@@ -28,6 +32,11 @@ public class EnderecoService {
 	public Endereco saveEndereco(Endereco endereco) {
 		if (endereco.getIdEndereco() == null) {
 			try {
+				APIEnderecoDTO enderecoDTO = apiEnderecoDTO.consultarEndereco(endereco.getCep());
+				endereco.setBairro(enderecoDTO.getBairro());
+				endereco.setCidade(enderecoDTO.getLocalidade());
+				endereco.setRua(enderecoDTO.getLogradouro());
+				endereco.setUf(enderecoDTO.getUf());
 				return enderecoRepository.save(endereco);
 			} catch (Exception e) {
 				throw new UniqueElementException();

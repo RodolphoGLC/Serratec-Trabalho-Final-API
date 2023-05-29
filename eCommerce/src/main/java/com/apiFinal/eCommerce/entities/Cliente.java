@@ -28,12 +28,14 @@ public class Cliente {
 	@Column(name = "id_cliente")
 	private Integer idCliente;
 	
+	//Unique
 	@NotNull
-	@Column(name = "email", unique = true)
+	@Column(name = "email")
 	private String email;
 	
+	//Unique
 	@NotNull
-	@Column(name = "cpf", unique = true)
+	@Column(name = "cpf")
 	@Pattern(regexp = "^[0-9]{11}")
 	private String cpf;
 	
@@ -48,8 +50,9 @@ public class Cliente {
 	private Date dataNascimento;
 
 	//FK - Endereço - unique = true
+	//Unique
 	@OneToOne
-	@JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco", unique = true)
+	@JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
 	private Endereco endereco;
 	
 	//FK Cliente Pedido

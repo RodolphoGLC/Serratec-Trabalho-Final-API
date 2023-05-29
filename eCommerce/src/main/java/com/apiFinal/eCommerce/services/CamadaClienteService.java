@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.dto.CriacaoClienteDTO;
 import com.apiFinal.eCommerce.dto.RealizarPedidoDTO;
+import com.apiFinal.eCommerce.dto.RelatorioPedidoDTO;
 import com.apiFinal.eCommerce.entities.Cliente;
 import com.apiFinal.eCommerce.entities.Endereco;
 import com.apiFinal.eCommerce.entities.ItemPedido;
@@ -41,6 +42,15 @@ public class CamadaClienteService {
 	
 	@Autowired
 	ProdutoRepository produtoRepository;
+	
+	@Autowired
+	EmailService emailService;
+	
+	@Autowired
+	RelatorioPedidoService relatorioPedidoService;
+	
+	@Autowired
+	RelatorioPedidoDTO relatorioPedidoDTO;
 	
 	
 	public Boolean criarConta(CriacaoClienteDTO criacaoClienteDTO) {
@@ -102,8 +112,11 @@ public class CamadaClienteService {
 			pedido.setStatus("Em separação.");
 			pedido.setValorTotal(valor);
 			pedidoRepository.save(pedido);
-		return true;
+			
+			RelatorioPedidoDTO relatorio = relatorioPedidoService.gerarRelatorio(pedido);
+			emailService.enviarEmail(pedido.getCliente().getEmail(), "Nota fiscal do pedido", relatorio.notaFiscal(pedido));
 		
+		return true;
 	}
 	
 	

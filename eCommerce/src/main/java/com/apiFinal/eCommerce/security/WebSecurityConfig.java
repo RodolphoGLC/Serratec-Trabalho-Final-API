@@ -44,14 +44,11 @@ public class WebSecurityConfig {
             //Essas linhas que definimos quais rotas serão publicas e quais privadas
             .authorizeHttpRequests(auth -> auth
             		.requestMatchers("/auth/**", "/roles/**", "/test/all", "/swagger-ui/**").permitAll()
-            		.requestMatchers(HttpMethod.GET, "/instrutores/**", "/turmas/**").hasAnyRole("USER", "INSTRUTOR", "DIRETORIA")
-                    .requestMatchers(HttpMethod.GET, "/telefones/**").hasAnyRole("INSTRUTOR", "DIRETORIA") 
-                    .requestMatchers(HttpMethod.POST, "/telefones/**").hasAnyRole("INSTRUTOR", "DIRETORIA") 
-                    .requestMatchers(HttpMethod.PUT, "/telefones/**").hasAnyRole("INSTRUTOR", "DIRETORIA") 
-                    .requestMatchers(HttpMethod.DELETE, "/telefones/**").hasAnyRole("INSTRUTOR", "DIRETORIA") 
-                    .requestMatchers(HttpMethod.POST, "/instrutores/**", "/turmas/**").hasAnyRole("DIRETORIA")
-                    .requestMatchers(HttpMethod.PUT, "/instrutores/**", "/turmas/**").hasAnyRole("DIRETORIA")
-                    .requestMatchers(HttpMethod.DELETE, "/instrutores/**", "/turmas/**").hasAnyRole("DIRETORIA")
+            		.requestMatchers(HttpMethod.POST, "/clientes/**", "/criacao/**", "/pedido/**").hasAnyRole("USER", "ADM")
+                    .requestMatchers(HttpMethod.PUT, "/clientes/**").hasAnyRole("USER", "ADM") 
+                    .requestMatchers(HttpMethod.GET, "/produtos/**", "/enderecos", "/pedidos/**").hasAnyRole("USER", "ADM") 
+                    .requestMatchers(HttpMethod.DELETE, "/clientes/**").hasAnyRole("USER", "ADM")
+                    .requestMatchers("/enderecos/**", "/itemPedidos/**", "/categorias/**", "/produtos/**", "/clientes/**", "/pedido/**").hasAnyRole("ADM")
                     .anyRequest().authenticated()) //demais rotas, nao configuradas acima, so poderao ser acessadas mediante autenticacao
 		;		
 		

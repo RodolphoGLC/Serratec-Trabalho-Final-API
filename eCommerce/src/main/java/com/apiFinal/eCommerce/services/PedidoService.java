@@ -35,9 +35,6 @@ public class PedidoService {
 	public Pedido savePedido(Pedido pedido) {
 		if (pedido.getIdPedido() == null) {
 			try {
-				//Sem tratamento a parte do e-mail
-				RelatorioPedidoDTO relatorio = relatorioPedidoService.gerarRelatorio(pedido);
-				emailService.enviarEmail(pedido.getCliente().getEmail(), "Nota fiscal do pedido", relatorio.notaFiscal());
 				return pedidoRepository.save(pedido);		
 			} catch (Exception e) {
 				throw new UniqueElementException();

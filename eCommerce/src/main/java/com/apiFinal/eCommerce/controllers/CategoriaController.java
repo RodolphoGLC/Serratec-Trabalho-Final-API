@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apiFinal.eCommerce.entities.Categoria;
-import com.apiFinal.eCommerce.exceptions.IncompleteArgumentException;
 import com.apiFinal.eCommerce.services.CategoriaService;
 
 import jakarta.validation.Valid;

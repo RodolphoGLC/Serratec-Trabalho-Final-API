@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.ItemPedido;
+import com.apiFinal.eCommerce.exceptions.NoSuchElementException;
 import com.apiFinal.eCommerce.exceptions.UniqueElementException;
 import com.apiFinal.eCommerce.exceptions.UnmatchingIdsException;
 import com.apiFinal.eCommerce.repositories.ItemPedidoRepository;
@@ -22,7 +23,7 @@ public class ItemPedidoService {
 	}
 	
 	public ItemPedido getItemPedidoById(Integer id) {
-		return itemPedidoRepository.findById(id).orElse(null);
+		return itemPedidoRepository.findById(id).orElseThrow(() -> new NoSuchElementException("item-pedido", id));
 	}
 	
 	public ItemPedido saveItemPedido(ItemPedido itemPedido) {

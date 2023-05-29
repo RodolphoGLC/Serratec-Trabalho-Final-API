@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.Endereco;
+import com.apiFinal.eCommerce.exceptions.NoSuchElementException;
 import com.apiFinal.eCommerce.exceptions.UniqueElementException;
 import com.apiFinal.eCommerce.exceptions.UnmatchingIdsException;
 import com.apiFinal.eCommerce.repositories.EnderecoRepository;
@@ -21,7 +22,7 @@ public class EnderecoService {
 	}
 
 	public Endereco getEnderecoById(Integer id) {
-		return enderecoRepository.findById(id).orElse(null);
+		return enderecoRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Categoria", id));
 	}
 
 	public Endereco saveEndereco(Endereco endereco) {

@@ -16,6 +16,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCliente", scope = Cliente.class)
 @Entity
@@ -33,10 +34,12 @@ public class Cliente {
 	
 	@NotNull
 	@Column(name = "cpf", unique = true)
+	@Pattern(regexp = "^[0-9]{11}")
 	private String cpf;
 	
 	@NotNull
 	@Column(name = "telefone")
+	@Pattern(regexp = "^[0-9]{10,15}")
 	private String telefone;
 	
 	//Deve ser anterior a data atual

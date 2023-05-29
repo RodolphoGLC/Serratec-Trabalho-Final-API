@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.Categoria;
+import com.apiFinal.eCommerce.exceptions.NoSuchElementException;
 import com.apiFinal.eCommerce.exceptions.UniqueElementException;
 import com.apiFinal.eCommerce.exceptions.UnmatchingIdsException;
 import com.apiFinal.eCommerce.repositories.CategoriaRepository;
@@ -21,7 +22,7 @@ public class CategoriaService {
 	}
 	
 	public Categoria getCategoriaById(Integer id) {
-		return categoriaRepository.findById(id).orElse(null);
+		return categoriaRepository.findById(id).orElseThrow(() -> new NoSuchElementException("categoria", id));
 	}
 	
 	public Categoria saveCategoria(Categoria categoria) {

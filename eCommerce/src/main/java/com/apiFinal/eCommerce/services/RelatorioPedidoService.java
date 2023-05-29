@@ -3,11 +3,14 @@ package com.apiFinal.eCommerce.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.apiFinal.eCommerce.dto.ItemPedidoDTO;
 import com.apiFinal.eCommerce.dto.RelatorioPedidoDTO;
 import com.apiFinal.eCommerce.entities.ItemPedido;
 import com.apiFinal.eCommerce.entities.Pedido;
 
+@Service
 public class RelatorioPedidoService {
 	
 	public RelatorioPedidoDTO gerarRelatorio(Pedido pedido) {

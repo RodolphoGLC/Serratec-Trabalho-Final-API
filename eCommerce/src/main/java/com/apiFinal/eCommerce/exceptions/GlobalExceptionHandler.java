@@ -27,6 +27,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler   {
 //        return problemDetail;
 //    }
 //	
+	@ExceptionHandler(NoSuchElementException.class)
+    ProblemDetail handleNoSuchElementException(NoSuchElementException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
+        
+        problemDetail.setTitle("Recurso Não Encontrado");
+        problemDetail.setType(URI.create("https://api.eCommerce.com/errors/not-found"));
+        return problemDetail;
+    }
+	
 	@ExceptionHandler(UnmatchingIdsException.class)
     ProblemDetail handleUnmatchingIdsException(UnmatchingIdsException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -41,6 +50,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler   {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
         
         problemDetail.setTitle("Elemento unico");
+        problemDetail.setType(URI.create("https://api.eCommerce.com/errors/bad-request"));
+        return problemDetail;
+    }
+	
+	@ExceptionHandler(InsufficientException.class)
+    ProblemDetail handleInsufficientException(InsufficientException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+        
+        problemDetail.setTitle("Estoque insuficiente");
         problemDetail.setType(URI.create("https://api.eCommerce.com/errors/bad-request"));
         return problemDetail;
     }

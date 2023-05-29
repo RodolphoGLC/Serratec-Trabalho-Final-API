@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.apiFinal.eCommerce.dto.CriacaoClienteDTO;
 import com.apiFinal.eCommerce.entities.Cliente;
+import com.apiFinal.eCommerce.services.CamadaClienteService;
 import com.apiFinal.eCommerce.services.ClienteService;
 
 import jakarta.validation.Valid;
@@ -23,7 +25,10 @@ import jakarta.validation.Valid;
 @RequestMapping("/clientes")
 public class ClienteController {
 	@Autowired
-	ClienteService clienteService ;
+	ClienteService clienteService;
+	
+	@Autowired
+	CamadaClienteService camadaClienteService;
 
 	@GetMapping
 	public ResponseEntity<List<Cliente>> getAllClientes() {
@@ -33,6 +38,16 @@ public class ClienteController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Cliente> getClienteById(@Valid @PathVariable Integer id) {
 		return new ResponseEntity<>(clienteService.getClienteById(id),HttpStatus.OK);
+	}
+	
+	@PostMapping("/criacao")
+	public ResponseEntity<Boolean> criacao(@Valid @RequestBody CriacaoClienteDTO criacaoClienteDTO) {
+		Boolean check = camadaClienteService.criarConta(criacaoClienteDTO);
+		if(check == true) {
+			return new ResponseEntity<>(camadaClienteService.criarConta(criacaoClienteDTO), HttpStatus.CREATED);		
+		} else {
+			return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@PostMapping

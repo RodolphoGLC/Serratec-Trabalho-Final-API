@@ -29,7 +29,7 @@ public class Pedido {
 	
 	//O dia e a hora da realização do pedido
 	@Column(name = "data_pedido")
-	private Date dataPedido = new Date();
+	private Date dataPedido;
 	
 	//Deve haver a condição que seja depois da data de envio
 	@Column(name = "data_entrega")

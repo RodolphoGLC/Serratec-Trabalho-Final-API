@@ -46,7 +46,6 @@ public class Pedido {
 	@Column(name = "valor_total")
 	private double valorTotal;
 	
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente", unique = true)
 	private Cliente cliente;

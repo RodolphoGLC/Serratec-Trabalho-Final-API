@@ -45,7 +45,6 @@ public class Endereco {
 	@Column(name = "complemento")
 	private String complemento;
 	
-	@NotNull
 	@OneToOne(mappedBy = "endereco")
 	private Cliente cliente;
 

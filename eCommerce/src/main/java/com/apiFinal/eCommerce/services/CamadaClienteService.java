@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.apiFinal.eCommerce.dto.APIEnderecoDTO;
 import com.apiFinal.eCommerce.dto.CriacaoClienteDTO;
 import com.apiFinal.eCommerce.dto.RealizarPedidoDTO;
 import com.apiFinal.eCommerce.dto.RelatorioPedidoDTO;
@@ -15,6 +17,8 @@ import com.apiFinal.eCommerce.entities.Endereco;
 import com.apiFinal.eCommerce.entities.ItemPedido;
 import com.apiFinal.eCommerce.entities.Pedido;
 import com.apiFinal.eCommerce.entities.Produto;
+import com.apiFinal.eCommerce.entities.Role;
+import com.apiFinal.eCommerce.entities.User;
 import com.apiFinal.eCommerce.exceptions.InsufficientException;
 import com.apiFinal.eCommerce.exceptions.NoSuchElementException;
 import com.apiFinal.eCommerce.repositories.ClienteRepository;
@@ -24,6 +28,7 @@ import com.apiFinal.eCommerce.repositories.PedidoRepository;
 import com.apiFinal.eCommerce.repositories.ProdutoRepository;
 
 @Service
+@Component
 public class CamadaClienteService {
 	@Autowired
 	ClienteRepository clienteRepository;
@@ -52,35 +57,42 @@ public class CamadaClienteService {
 	@Autowired
 	RelatorioPedidoDTO relatorioPedidoDTO;
 	
+	@Autowired
+	APIEnderecoDTO apiEnderecoDTO;
+	
 	
 	public Boolean criarConta(CriacaoClienteDTO criacaoClienteDTO) {
-		try {
 			//roleRepository
 			Cliente cliente = new Cliente();
 			Endereco endereco = new Endereco();
+			//User user = new User();
+			
+			//Criação local de usuário
 			
 			cliente.setCpf(criacaoClienteDTO.getCpf());
 			cliente.setDataNascimento(criacaoClienteDTO.getDataNascimento());
 			cliente.setEmail(criacaoClienteDTO.getEmail());
 			cliente.setTelefone(criacaoClienteDTO.getTelefone());
-			endereco.setCep(criacaoClienteDTO.getCep());
+			
 			//API Externa para Rua,Bairro, Cidade, UF
-			endereco.setRua("Rua A");
-			endereco.setBairro("Bairro A");
-			endereco.setCidade("Cidade A");
-			endereco.setUf("RJ");
-			// Tem que trocar
+			APIEnderecoDTO endereco1 = apiEnderecoDTO.consultarEndereco(criacaoClienteDTO.getCep());
+			
+			endereco.setCep(criacaoClienteDTO.getCep());
+			endereco.setComplemento(criacaoClienteDTO.getComplemento());
 			endereco.setNumero(criacaoClienteDTO.getNumero());
-			if (criacaoClienteDTO.getComplemento() != null) {
-				endereco.setComplemento(criacaoClienteDTO.getComplemento());
-			}
-			endereco.setCliente(cliente);
-			clienteRepository.save(cliente);
+			endereco.setBairro(endereco1.getBairro());
+			endereco.setCidade(endereco1.getLocalidade());
+			endereco.setRua(endereco1.getLogradouro());
+			endereco.setUf(endereco1.getUf());
+			
 			enderecoRepository.save(endereco);
+			
+			cliente.setEndereco(endereco);
+			
+			clienteRepository.save(cliente);
+			
 			return true;
-		} catch (Exception e) {
-			return false;
-		}
+		
 	}
 	
 	public Boolean fazerPedido(List<RealizarPedidoDTO> lista, Integer idCliente) {

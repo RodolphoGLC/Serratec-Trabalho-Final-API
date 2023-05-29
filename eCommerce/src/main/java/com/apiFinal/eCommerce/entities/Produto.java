@@ -56,7 +56,6 @@ public class Produto {
 	private List<ItemPedido> itemPedido;
 	
 	@ManyToOne
-	@NotBlank
 	@JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
 	private Categoria categoria;
 

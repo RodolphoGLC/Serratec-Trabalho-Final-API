@@ -42,14 +42,14 @@ public class WebSecurityConfig {
             .exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandler)) //configura a classe para tratamento da excecao de autenticacao
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //define a politica de sessao
             //Essas linhas que definimos quais rotas serão publicas e quais privadas
-            .authorizeHttpRequests(auth -> auth
-            		.requestMatchers("/auth/**", "/roles/**", "/test/all", "/swagger-ui/**").permitAll()
-            		.requestMatchers(HttpMethod.POST, "/clientes/**", "/criacao/**", "/pedido/**").hasAnyRole("USER", "ADM")
-                    .requestMatchers(HttpMethod.PUT, "/clientes/**").hasAnyRole("USER", "ADM") 
-                    .requestMatchers(HttpMethod.GET, "/produtos/**", "/enderecos", "/pedidos/**").hasAnyRole("USER", "ADM") 
-                    .requestMatchers(HttpMethod.DELETE, "/clientes/**").hasAnyRole("USER", "ADM")
-                    .requestMatchers("/enderecos/**", "/itemPedidos/**", "/categorias/**", "/produtos/**", "/clientes/**", "/pedido/**").hasAnyRole("ADM")
-                    .anyRequest().authenticated()) //demais rotas, nao configuradas acima, so poderao ser acessadas mediante autenticacao
+            //.authorizeHttpRequests(auth -> auth
+            		//.requestMatchers("/auth/**", "/roles/**", "/test/all", "/swagger-ui/**", "/api1/**", "/criacao/**").permitAll()
+            		//.requestMatchers(HttpMethod.POST, "/clientes/**", "/pedido/**").hasAnyRole("USER", "ADM")
+                    //.requestMatchers(HttpMethod.PUT, "/clientes/**").hasAnyRole("USER", "ADM") 
+                    //.requestMatchers(HttpMethod.GET, "/produtos/**", "/enderecos", "/pedidos/**").hasAnyRole("USER", "ADM") 
+                    //.requestMatchers(HttpMethod.DELETE, "/clientes/**").hasAnyRole("USER", "ADM")
+                    //.requestMatchers("/enderecos/**", "/itemPedidos/**", "/categorias/**", "/produtos/**", "/clientes/**", "/pedido/**").hasAnyRole("ADM")
+                    //.anyRequest().authenticated()) //demais rotas, nao configuradas acima, so poderao ser acessadas mediante autenticacao
 		;		
 		
 		http.authenticationProvider(authenticationProvider()); //define o provedor de autenticacao

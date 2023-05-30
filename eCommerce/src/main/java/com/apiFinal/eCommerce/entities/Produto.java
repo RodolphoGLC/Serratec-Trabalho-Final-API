@@ -36,7 +36,6 @@ public class Produto {
 	@Column(name = "descricao", unique = true)
 	private String descricao;
 	
-	@NotBlank
 	@Min(0)
 	@Column(name = "qtdEstoque")
 	private Integer qtdEstoque;
@@ -45,7 +44,6 @@ public class Produto {
 	@Column(name = "data_cadastro")
 	private Date dataCadastro;
 	
-	@NotBlank
 	@Min(0)
 	@Column(name = "valor_unitario")
 	private Double valorUnitario;

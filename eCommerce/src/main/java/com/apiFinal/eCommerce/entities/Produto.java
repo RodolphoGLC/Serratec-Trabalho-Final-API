@@ -1,6 +1,6 @@
 package com.apiFinal.eCommerce.entities;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -15,7 +15,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idProduto", scope = Produto.class)
@@ -36,15 +35,12 @@ public class Produto {
 	@Column(name = "descricao", unique = true)
 	private String descricao;
 	
-	@Min(0)
 	@Column(name = "qtdEstoque")
 	private Integer qtdEstoque;
 	
-	//tem que ser o dia e a hora que for cadastrado
 	@Column(name = "data_cadastro")
-	private Date dataCadastro;
+	private LocalDateTime dataCadastro;
 	
-	@Min(0)
 	@Column(name = "valor_unitario")
 	private Double valorUnitario;
 	
@@ -89,11 +85,11 @@ public class Produto {
 		this.qtdEstoque = qtdEstoque;
 	}
 
-	public Date getDataCadastro() {
+	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(Date dataCadastro) {
+	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 

@@ -1,6 +1,6 @@
 package com.apiFinal.eCommerce.entities;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -15,7 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.FutureOrPresent;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPedido", scope = Pedido.class)
 @Entity
@@ -27,19 +27,17 @@ public class Pedido {
 	@Column(name = "id_pedido")
 	private Integer idPedido;
 	
-	//O dia e a hora da realização do pedido
 	@Column(name = "data_pedido")
-	private Date dataPedido;
+	private LocalDateTime dataPedido;
 	
-	//Deve haver a condição que seja depois da data de envio
+	@FutureOrPresent(message = "Tentativa de cadastro com data retroativa")
 	@Column(name = "data_entrega")
-	private Date dataEntrega;
+	private LocalDateTime dataEntrega;
 	
-	//Deve haver a condição que seja depois da data do pedido
+	@FutureOrPresent(message = "Tentativa de cadastro com data retroativa")
 	@Column(name = "data_envio")
-	private Date dataEnvio;
+	private LocalDateTime dataEnvio;
 	
-	@NotNull
 	@Column(name = "status")
 	private String status;
 	
@@ -61,27 +59,27 @@ public class Pedido {
 		this.idPedido = idPedido;
 	}
 
-	public Date getDataPedido() {
+	public LocalDateTime getDataPedido() {
 		return dataPedido;
 	}
 
-	public void setDataPedido(Date dataPedido) {
+	public void setDataPedido(LocalDateTime dataPedido) {
 		this.dataPedido = dataPedido;
 	}
 
-	public Date getDataEntrega() {
+	public LocalDateTime getDataEntrega() {
 		return dataEntrega;
 	}
 
-	public void setDataEntrega(Date dataEntrega) {
+	public void setDataEntrega(LocalDateTime dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
 
-	public Date getDataEnvio() {
+	public LocalDateTime getDataEnvio() {
 		return dataEnvio;
 	}
 
-	public void setDataEnvio(Date dataEnvio) {
+	public void setDataEnvio(LocalDateTime dataEnvio) {
 		this.dataEnvio = dataEnvio;
 	}
 

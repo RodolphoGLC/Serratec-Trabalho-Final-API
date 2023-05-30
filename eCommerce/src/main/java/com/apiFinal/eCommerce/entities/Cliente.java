@@ -1,6 +1,6 @@
 package com.apiFinal.eCommerce.entities;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -16,6 +16,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCliente", scope = Cliente.class)
@@ -27,15 +28,13 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_cliente")
 	private Integer idCliente;
-	
-	//Unique
+
 	@NotNull
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	private String email;
 	
-	//Unique
 	@NotNull
-	@Column(name = "cpf")
+	@Column(name = "cpf", unique = true)
 	@Pattern(regexp = "^[0-9]{11}")
 	private String cpf;
 	
@@ -44,18 +43,15 @@ public class Cliente {
 	@Pattern(regexp = "^[0-9]{10,15}")
 	private String telefone;
 	
-	//Deve ser anterior a data atual
 	@NotNull
+	@PastOrPresent
 	@Column(name = "data_nascimento")
-	private Date dataNascimento;
+	private LocalDateTime dataNascimento;
 
-	//FK - Endereço - unique = true
-	//Unique
 	@OneToOne
 	@JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
 	private Endereco endereco;
 	
-	//FK Cliente Pedido
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> listaPedidos;
 
@@ -91,11 +87,11 @@ public class Cliente {
 		this.telefone = telefone;
 	}
 
-	public Date getDataNascimento() {
+	public LocalDateTime getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(LocalDateTime dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 

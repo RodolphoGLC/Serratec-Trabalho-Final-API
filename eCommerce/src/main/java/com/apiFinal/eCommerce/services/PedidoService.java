@@ -1,11 +1,12 @@
 package com.apiFinal.eCommerce.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.apiFinal.eCommerce.dto.RelatorioPedidoDTO;
+import com.apiFinal.eCommerce.entities.ItemPedido;
 import com.apiFinal.eCommerce.entities.Pedido;
 import com.apiFinal.eCommerce.exceptions.NoSuchElementException;
 import com.apiFinal.eCommerce.exceptions.UniqueElementException;
@@ -35,6 +36,16 @@ public class PedidoService {
 	public Pedido savePedido(Pedido pedido) {
 		if (pedido.getIdPedido() == null) {
 			try {
+				pedido.setStatus("separação");
+				LocalDateTime data = LocalDateTime.now();
+				pedido.setDataPedido(data);
+				Double valor = 0.0;
+				if(pedido.getListaItemPedido() != null) {
+					for(ItemPedido itemPedido: pedido.getListaItemPedido()) {
+						valor += itemPedido.getValorLiquido();
+					}					
+				}
+				pedido.setValorTotal(valor);
 				return pedidoRepository.save(pedido);		
 			} catch (Exception e) {
 				throw new UniqueElementException();

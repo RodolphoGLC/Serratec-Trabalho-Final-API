@@ -42,7 +42,7 @@ public class ItemPedidoController {
 	
 	@PutMapping
 	public ResponseEntity<ItemPedido> updateItemPedido(@Valid @RequestBody ItemPedido itemPedido, @Valid Integer id) {
-		return new ResponseEntity<>(itemPedidoService.saveItemPedido(itemPedido),HttpStatus.CREATED);
+		return new ResponseEntity<>(itemPedidoService.updateItemPedido(itemPedido),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")

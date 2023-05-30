@@ -1,6 +1,6 @@
 package com.apiFinal.eCommerce.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ public class RelatorioPedidoDTO {
 	
 	//Pedido
 	private Integer idPedido;
-	private Date dataPedido;
+	private LocalDateTime dataPedido;
 	private Double valorTotal;
 	
 	//Item Pedido
@@ -23,7 +23,7 @@ public class RelatorioPedidoDTO {
 		super();
 	}
 
-	public RelatorioPedidoDTO(Integer idPedido, Date dataPedido, Double valorTotal, List<ItemPedidoDTO> listaItems) {
+	public RelatorioPedidoDTO(Integer idPedido, LocalDateTime dataPedido, Double valorTotal, List<ItemPedidoDTO> listaItems) {
 		super();
 		this.idPedido = idPedido;
 		this.dataPedido = dataPedido;
@@ -39,11 +39,11 @@ public class RelatorioPedidoDTO {
 		this.idPedido = idPedido;
 	}
 
-	public Date getDataPedido() {
+	public LocalDateTime getDataPedido() {
 		return dataPedido;
 	}
 
-	public void setDataPedido(Date dataPedido) {
+	public void setDataPedido(LocalDateTime dataPedido) {
 		this.dataPedido = dataPedido;
 	}
 

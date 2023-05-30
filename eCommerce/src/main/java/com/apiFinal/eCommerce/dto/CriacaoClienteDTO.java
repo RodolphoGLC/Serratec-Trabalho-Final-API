@@ -1,6 +1,6 @@
 package com.apiFinal.eCommerce.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -24,7 +24,7 @@ public class CriacaoClienteDTO {
 	private String telefone;
 	
 	@NotNull
-	private Date dataNascimento;
+	private LocalDateTime dataNascimento;
 	
 	@NotNull
 	private String cep;
@@ -78,11 +78,11 @@ public class CriacaoClienteDTO {
 		this.telefone = telefone;
 	}
 
-	public Date getDataNascimento() {
+	public LocalDateTime getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(LocalDateTime dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 

@@ -42,7 +42,7 @@ public class EnderecoController {
 	
 	@PutMapping
 	public ResponseEntity<Endereco> updateEndereco(@Valid @RequestBody Endereco endereco, @Valid Integer id) {
-		return new ResponseEntity<>(enderecoService.saveEndereco(endereco),HttpStatus.CREATED);
+		return new ResponseEntity<>(enderecoService.updateEndereco(endereco),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")

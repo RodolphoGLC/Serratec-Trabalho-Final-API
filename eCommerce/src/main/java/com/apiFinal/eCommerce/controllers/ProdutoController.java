@@ -42,7 +42,7 @@ public class ProdutoController {
 	
 	@PutMapping
 	public ResponseEntity<Produto> updateProduto(@Valid @RequestBody Produto produto, @Valid Integer id) {
-		return new ResponseEntity<>(produtoService.saveProduto(produto),HttpStatus.CREATED);
+		return new ResponseEntity<>(produtoService.updateProduto(produto),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")

@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apiFinal.eCommerce.entities.ItemPedido;
+import com.apiFinal.eCommerce.entities.Produto;
+import com.apiFinal.eCommerce.exceptions.InsufficientException;
 import com.apiFinal.eCommerce.exceptions.NoSuchElementException;
 import com.apiFinal.eCommerce.exceptions.UniqueElementException;
 import com.apiFinal.eCommerce.exceptions.UnmatchingIdsException;
 import com.apiFinal.eCommerce.repositories.ItemPedidoRepository;
+import com.apiFinal.eCommerce.repositories.ProdutoRepository;
 
 @Service
 public class ItemPedidoService {
@@ -17,6 +20,9 @@ public class ItemPedidoService {
 
 	@Autowired
 	ItemPedidoRepository itemPedidoRepository;
+	
+	@Autowired
+	ProdutoRepository produtoRepository;
 	
 	public List<ItemPedido> getAllItemPedidos() {
 		return itemPedidoRepository.findAll();
@@ -28,11 +34,17 @@ public class ItemPedidoService {
 	
 	public ItemPedido saveItemPedido(ItemPedido itemPedido) {
 		if (itemPedido.getIdItemPedido() == null) {
-			try {
-				return itemPedidoRepository.save(itemPedido);		
-			} catch (Exception e) {
-				throw new UniqueElementException();
-			}			
+			Produto produto = produtoRepository.findById(itemPedido.getProduto().getIdProduto()).orElse(null);
+			if(produto.getQtdEstoque() >= itemPedido.getQuantidade()) {
+				itemPedido.setValorBruto(itemPedido.getQuantidade() * produto.getValorUnitario());
+				itemPedido.setValorLiquido(itemPedido.getValorBruto()*(1-itemPedido.getPorcentagemDesconto()));
+				itemPedido.setPrecoVenda(produto.getValorUnitario());
+				produto.setQtdEstoque(produto.getQtdEstoque() - itemPedido.getQuantidade());
+				produtoRepository.save(produto);
+				return itemPedidoRepository.save(itemPedido);			
+			} else {
+				throw new InsufficientException(produto.getNome());
+			}	
 		} else {
 			throw new UnmatchingIdsException(itemPedido.getIdItemPedido(), itemPedido.toString());
 		}

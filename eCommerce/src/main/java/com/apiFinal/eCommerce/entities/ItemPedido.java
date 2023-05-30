@@ -11,8 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idItemPedido", scope = ItemPedido.class)
 @Entity
@@ -24,12 +22,9 @@ public class ItemPedido {
 	@Column(name = "id_item_pedido")
 	private Integer idItemPedido;
 	
-	@NotNull
-	@Min(1)
 	@Column(name = "quantidade")
 	private Integer quantidade;
 	
-	@NotNull
 	@Column(name = "preco_venda")
 	private double precoVenda;
 	
@@ -43,11 +38,11 @@ public class ItemPedido {
 	private double valorLiquido;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido", unique = true)
+	@JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido")
 	private Pedido pedido;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_produto", referencedColumnName = "id_produto", unique = true)
+	@JoinColumn(name = "id_produto", referencedColumnName = "id_produto")
 	private Produto produto;
 
 	public Integer getIdItemPedido() {

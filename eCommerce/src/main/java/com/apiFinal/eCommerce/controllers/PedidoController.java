@@ -40,16 +40,16 @@ public class PedidoController {
 		return new ResponseEntity<>(pedidoService.getPedidoById(id),HttpStatus.OK);
 	}
 	
-	@PostMapping("/carrinho")
-	public ResponseEntity<Boolean> fazerPedido(@Valid @RequestBody List<RealizarPedidoDTO> lista, Integer idCliente) {
-		Boolean check = camadaClienteService.fazerPedido(lista, idCliente);
-		if (check == true) {
-			return new ResponseEntity<>(camadaClienteService.fazerPedido(lista, idCliente), HttpStatus.CREATED);
-			//Enviar email para cliente
-		} else {
-			return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-		}
-	}
+//	@PostMapping("/carrinho")
+//	public ResponseEntity<Boolean> fazerPedido(@Valid @RequestBody List<RealizarPedidoDTO> lista, Integer idCliente) {
+//		Boolean check = camadaClienteService.fazerPedido(lista, idCliente);
+//		if (check == true) {
+//			return new ResponseEntity<>(camadaClienteService.fazerPedido(lista, idCliente), HttpStatus.CREATED);
+//			//Enviar email para cliente
+//		} else {
+//			return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+//		}
+//	}
 	
 	@PostMapping
 	public ResponseEntity<Pedido> savePedido(@Valid @RequestBody Pedido pedido) {
@@ -58,7 +58,7 @@ public class PedidoController {
 	
 	@PutMapping
 	public ResponseEntity<Pedido> updatePedido(@Valid @RequestBody Pedido pedido, @Valid Integer id) {
-		return new ResponseEntity<>(pedidoService.savePedido(pedido),HttpStatus.CREATED);
+		return new ResponseEntity<>(pedidoService.updatePedido(pedido),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")

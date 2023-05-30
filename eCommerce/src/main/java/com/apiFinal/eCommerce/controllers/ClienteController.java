@@ -42,12 +42,7 @@ public class ClienteController {
 	
 	@PostMapping("/criacao")
 	public ResponseEntity<Boolean> criacao(@Valid @RequestBody CriacaoClienteDTO criacaoClienteDTO) {
-		//Boolean check = camadaClienteService.criarConta(criacaoClienteDTO);
-		//if(check == true) {
 			return new ResponseEntity<>(camadaClienteService.criarConta(criacaoClienteDTO), HttpStatus.CREATED);		
-		//} else {
-		//	return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-		//}
 	}
 	
 	@PostMapping
@@ -57,7 +52,7 @@ public class ClienteController {
 	
 	@PutMapping
 	public ResponseEntity<Cliente> updateCliente(@Valid @RequestBody Cliente cliente, @Valid Integer id) {
-		return new ResponseEntity<>(clienteService.saveCliente(cliente),HttpStatus.CREATED);
+		return new ResponseEntity<>(clienteService.updateCliente(cliente),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")

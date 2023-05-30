@@ -1,5 +1,6 @@
 package com.apiFinal.eCommerce.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class ProdutoService {
 	public Produto saveProduto(Produto produto) {
 		if (produto.getIdProduto() == null) {
 			try {
+				produto.setDataCadastro(LocalDateTime.now());
 				return produtoRepository.save(produto);
 			} catch (Exception e) {
 				throw new UniqueElementException();

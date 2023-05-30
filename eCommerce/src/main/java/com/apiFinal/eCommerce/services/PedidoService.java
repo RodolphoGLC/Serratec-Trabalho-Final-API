@@ -1,11 +1,15 @@
 package com.apiFinal.eCommerce.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.apiFinal.eCommerce.dto.ItemPedidoDTO;
+import com.apiFinal.eCommerce.dto.PedidoDTO;
+import com.apiFinal.eCommerce.dto.RelatorioPedidoDTO;
 import com.apiFinal.eCommerce.entities.ItemPedido;
 import com.apiFinal.eCommerce.entities.Pedido;
 import com.apiFinal.eCommerce.exceptions.NoSuchElementException;
@@ -51,7 +55,32 @@ public class PedidoService {
 					}					
 				}
 				pedido.setValorTotal(valor);
-				return pedidoRepository.save(pedido);		
+				if (pedido.getValorTotal() != 0) {
+					PedidoDTO pedidoDTO =new PedidoDTO();
+					List<ItemPedidoDTO> lista = new ArrayList<ItemPedidoDTO>();
+					pedidoDTO.setIdPedido(pedido.getIdPedido());
+					pedidoDTO.setDataPedido(pedido.getDataPedido());
+					pedidoDTO.setStatus(pedido.getStatus());
+					pedidoDTO.setValorTotal(pedido.getValorTotal());
+					
+					for (ItemPedido itemPedido:pedido.getListaItemPedido()) {
+						ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO();
+						itemPedidoDTO.setIdProduto(itemPedido.getProduto().getIdProduto());
+						itemPedidoDTO.setNomeProduto(itemPedido.getProduto().getNome());
+						itemPedidoDTO.setPrecoVenda(itemPedido.getProduto().getValorUnitario());
+						itemPedidoDTO.setQuantidade(itemPedido.getQuantidade());
+						itemPedidoDTO.setValorBruto(itemPedido.getValorBruto());
+						itemPedidoDTO.setPercentualDesconto(itemPedido.getPorcentagemDesconto());
+						itemPedidoDTO.setValorLiquido(itemPedido.getValorLiquido());
+						lista.add(itemPedidoDTO);
+						}
+					pedidoDTO.setListaItemPedido(lista);
+					RelatorioPedidoDTO relatorioPedidoDTO = new RelatorioPedidoDTO();
+					emailService.enviarEmail(pedido.getCliente().getEmail(), "pedido", relatorioPedidoDTO.notaFiscal(pedidoDTO));
+					
+				}
+				return pedidoRepository.save(pedido);
+				
 		} else {
 			throw new UnmatchingIdsException(pedido.getIdPedido(), pedido.getStatus());
 		}

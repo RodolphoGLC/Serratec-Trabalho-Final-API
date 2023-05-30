@@ -5,9 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.apiFinal.eCommerce.entities.ItemPedido;
-import com.apiFinal.eCommerce.entities.Pedido;
-
 @Component	
 public class RelatorioPedidoDTO {
 	
@@ -73,13 +70,13 @@ public class RelatorioPedidoDTO {
 					"\nValor total: " + pedidoDTO.getValorTotal() + 
 					"\n==========================================";
 		
-		for(ItemPedido itemPedido : pedidoDTO.getListaItemPedido()) {
-			mensagem += "\nId do produto: " + itemPedido.getProduto() +
-					    "\nNome do produto: " + itemPedido.getProduto().getNome() + 
-					    "\nPreço venda: " + itemPedido.getProduto().getValorUnitario() + 
+		for(ItemPedidoDTO itemPedido : pedidoDTO.getListaItemPedido()) {
+			mensagem += "\nId do produto: " + itemPedido.getIdProduto() +
+					    "\nNome do produto: " + itemPedido.getNomeProduto() + 
+					    "\nPreço venda: " + itemPedido.getPrecoVenda() + 
 					    "\nQuantidade do produto: " + itemPedido.getQuantidade() +
 					    "\nValor bruto do produto: " + itemPedido.getValorBruto() +
-					    "\nPercentual de desconto: " + itemPedido.getPorcentagemDesconto() +
+					    "\nPercentual de desconto: " + itemPedido.getPercentualDesconto() +
 					    "\nValor líquido do produto: " + itemPedido.getValorLiquido() +
 					    "\n-----------------------------------------------------------";
 		}

@@ -22,7 +22,7 @@ public class PedidoDTO {
 	
 	private Cliente cliente;
 	
-	private List<ItemPedido> listaItemPedido;
+	private List<ItemPedidoDTO> listaItemPedido;
 
 	public Integer getIdPedido() {
 		return idPedido;
@@ -80,11 +80,11 @@ public class PedidoDTO {
 		this.cliente = cliente;
 	}
 
-	public List<ItemPedido> getListaItemPedido() {
+	public List<ItemPedidoDTO> getListaItemPedido() {
 		return listaItemPedido;
 	}
 
-	public void setListaItemPedido(List<ItemPedido> listaItemPedido) {
+	public void setListaItemPedido(List<ItemPedidoDTO> listaItemPedido) {
 		this.listaItemPedido = listaItemPedido;
 	}
 	

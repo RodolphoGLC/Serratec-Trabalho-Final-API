@@ -15,8 +15,10 @@ import com.apiFinal.eCommerce.entities.Pedido;
 import com.apiFinal.eCommerce.exceptions.NoSuchElementException;
 import com.apiFinal.eCommerce.exceptions.UniqueElementException;
 import com.apiFinal.eCommerce.exceptions.UnmatchingIdsException;
+import com.apiFinal.eCommerce.repositories.ClienteRepository;
 import com.apiFinal.eCommerce.repositories.ItemPedidoRepository;
 import com.apiFinal.eCommerce.repositories.PedidoRepository;
+import com.apiFinal.eCommerce.repositories.ProdutoRepository;
 
 @Service
 public class PedidoService {
@@ -26,6 +28,12 @@ public class PedidoService {
 	
 	@Autowired
 	ItemPedidoRepository itemPedidoRepository;
+	
+	@Autowired
+	ProdutoRepository produtoRepository;
+	
+	@Autowired
+	ClienteRepository clienteRepository;
 	
 	@Autowired
 	EmailService emailService;
@@ -43,7 +51,9 @@ public class PedidoService {
 	}
 	
 	public Pedido savePedido(Pedido pedido) {
-		if (pedido.getIdPedido() == null) {
+		Boolean check = false;
+		try {
+			if (pedido.getIdPedido() == null) {
 				pedido.setStatus("separação");
 				LocalDateTime data = LocalDateTime.now();
 				pedido.setDataPedido(data);
@@ -55,6 +65,16 @@ public class PedidoService {
 					}					
 				}
 				pedido.setValorTotal(valor);
+				
+				check = true;
+				return pedidoRepository.save(pedido);
+			} else {
+				throw new UnmatchingIdsException(pedido.getIdPedido(), pedido.getStatus());
+			}
+		} catch (Exception e) {
+			throw new UnmatchingIdsException(pedido.getIdPedido(), pedido.getStatus());
+		} finally {
+			if(check) {
 				if (pedido.getValorTotal() != 0) {
 					PedidoDTO pedidoDTO =new PedidoDTO();
 					List<ItemPedidoDTO> lista = new ArrayList<ItemPedidoDTO>();
@@ -63,26 +83,28 @@ public class PedidoService {
 					pedidoDTO.setStatus(pedido.getStatus());
 					pedidoDTO.setValorTotal(pedido.getValorTotal());
 					
-					for (ItemPedido itemPedido:pedido.getListaItemPedido()) {
-						ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO();
-						itemPedidoDTO.setIdProduto(itemPedido.getProduto().getIdProduto());
-						itemPedidoDTO.setNomeProduto(itemPedido.getProduto().getNome());
-						itemPedidoDTO.setPrecoVenda(itemPedido.getProduto().getValorUnitario());
-						itemPedidoDTO.setQuantidade(itemPedido.getQuantidade());
-						itemPedidoDTO.setValorBruto(itemPedido.getValorBruto());
-						itemPedidoDTO.setPercentualDesconto(itemPedido.getPorcentagemDesconto());
-						itemPedidoDTO.setValorLiquido(itemPedido.getValorLiquido());
-						lista.add(itemPedidoDTO);
+					for (ItemPedido itemPedido: pedido.getListaItemPedido()) {
+						Integer idIP = itemPedido.getIdItemPedido();
+						if (itemPedidoRepository.findById(idIP).orElse(null) != null && itemPedidoRepository.findById(idIP).orElse(null).getProduto() != null) {
+							ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO();
+							itemPedidoDTO.setIdProduto(itemPedidoRepository.findById(idIP).orElse(null).getProduto().getIdProduto());
+							itemPedidoDTO.setNomeProduto(itemPedidoRepository.findById(idIP).orElse(null).getProduto().getNome());
+							itemPedidoDTO.setPrecoVenda(itemPedidoRepository.findById(idIP).orElse(null).getProduto().getValorUnitario());
+							itemPedidoDTO.setQuantidade(itemPedidoRepository.findById(idIP).orElse(null).getQuantidade());
+							itemPedidoDTO.setValorBruto(itemPedidoRepository.findById(idIP).orElse(null).getValorBruto());
+							itemPedidoDTO.setPercentualDesconto(itemPedidoRepository.findById(idIP).orElse(null).getPorcentagemDesconto());
+							itemPedidoDTO.setValorLiquido(itemPedidoRepository.findById(idIP).orElse(null).getValorLiquido());
+							lista.add(itemPedidoDTO);
 						}
+					}	
 					pedidoDTO.setListaItemPedido(lista);
 					RelatorioPedidoDTO relatorioPedidoDTO = new RelatorioPedidoDTO();
-					emailService.enviarEmail(pedido.getCliente().getEmail(), "pedido", relatorioPedidoDTO.notaFiscal(pedidoDTO));
+					Integer id = pedido.getCliente().getIdCliente();
+					String email = clienteRepository.findById(id).orElse(null).getEmail();
+					emailService.enviarEmail(email, "Nota fiscal do pedido", relatorioPedidoDTO.notaFiscal(pedidoDTO));
 					
 				}
-				return pedidoRepository.save(pedido);
-				
-		} else {
-			throw new UnmatchingIdsException(pedido.getIdPedido(), pedido.getStatus());
+			}
 		}
 	}
 	

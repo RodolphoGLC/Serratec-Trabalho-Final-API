@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.apiFinal.eCommerce.entities.Cliente;
-import com.apiFinal.eCommerce.entities.ItemPedido;
 
 public class PedidoDTO {
 

@@ -10,7 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idEndereco", scope = Endereco.class)
 @Entity
@@ -22,7 +23,8 @@ public class Endereco {
 	@Column(name = "id_endereco")
 	private Integer idEndereco;
 	
-	@NotNull
+	@NotBlank(message = "CEP não pode ser nulo.")
+	@Pattern(regexp = "^[0-9]{8}", message = "CEP inválido")
 	@Column(name = "cep")
 	private String cep;
 	
@@ -38,7 +40,7 @@ public class Endereco {
 	@Column(name = "uf")
 	private String uf;
 	
-	@NotNull
+	@NotBlank(message = "Número não pode ser nulo.")
 	@Column(name = "numero")
 	private String numero;
 	

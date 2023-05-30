@@ -24,11 +24,11 @@ public class Categoria {
 	@Column(name = "id_categoria")
 	private Integer idCategoria; 
 	
-	@NotNull
+	@NotNull(message = "Nome da categoria não pode ser nulo.")
 	@Column(name = "nome", unique = true)
 	private String nome;
 	
-	@NotNull
+	@NotNull(message = "Descrição da categoria não pode ser nula.")
 	@Column(name = "descricao", unique = true)
 	private String descricao;
 	

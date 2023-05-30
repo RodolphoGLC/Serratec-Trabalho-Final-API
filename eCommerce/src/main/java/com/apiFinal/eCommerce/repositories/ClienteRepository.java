@@ -7,5 +7,5 @@ import com.apiFinal.eCommerce.entities.Cliente;
 public interface ClienteRepository 
 			extends JpaRepository<Cliente, Integer> {
 
-		
+	public Cliente findByEmail(String email);
 }

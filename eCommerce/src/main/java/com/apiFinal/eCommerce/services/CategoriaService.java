@@ -49,7 +49,7 @@ public class CategoriaService {
 					throw new UniqueElementException();
 				}					
 			} else {
-				throw new UnmatchingIdsException(id);
+				throw new NoSuchElementException("categoria", categoria.getIdCategoria());
 			}
 		}
 	}

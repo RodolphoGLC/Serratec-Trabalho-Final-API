@@ -15,7 +15,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idProduto", scope = Produto.class)
 @Entity
@@ -27,7 +29,7 @@ public class Produto {
 	@Column(name = "id_produto")
 	private Integer idProduto;
 	
-	@NotBlank
+	@NotBlank(message = "Nome não pode ser nulo.")
 	@Column(name = "nome")
 	private String nome;
 	
@@ -35,12 +37,16 @@ public class Produto {
 	@Column(name = "descricao", unique = true)
 	private String descricao;
 	
+	@NotNull(message = "A quantidade do estoque deve ser um valor inteiro maior que zero.")
+	@Min(value = 0, message = "A quantidade deve ser um valor maior ou igual a zero.")
 	@Column(name = "qtdEstoque")
 	private Integer qtdEstoque;
 	
 	@Column(name = "data_cadastro")
 	private LocalDateTime dataCadastro;
 	
+	@NotNull(message = "Valor não pode ser nulo.")
+	@Min(value = 0, message = "Valor deve ser número positivo.")
 	@Column(name = "valor_unitario")
 	private Double valorUnitario;
 	
@@ -93,11 +99,11 @@ public class Produto {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public double getValorUnitario() {
+	public Double getValorUnitario() {
 		return valorUnitario;
 	}
 
-	public void setValorUnitario(double valorUnitario) {
+	public void setValorUnitario(Double valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}
 

@@ -25,16 +25,16 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@NotBlank
+	@NotBlank(message = "Username não pode ser vazio.")
 	@Size(max = 20)
 	private String username;
 
-	@NotBlank
+	@NotBlank(message = "Email não pode ser vazio.")
 	@Size(max = 50)
 	@Email
 	private String email;
 
-	@NotBlank
+	@NotBlank(message = "Senha não pode ser vazia.")
 	@Size(max = 120)
 	private String password;
 

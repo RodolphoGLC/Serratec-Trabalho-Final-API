@@ -10,6 +10,7 @@ import com.apiFinal.eCommerce.entities.Endereco;
 import com.apiFinal.eCommerce.exceptions.NoSuchElementException;
 import com.apiFinal.eCommerce.exceptions.UniqueElementException;
 import com.apiFinal.eCommerce.exceptions.UnmatchingIdsException;
+import com.apiFinal.eCommerce.repositories.ClienteRepository;
 import com.apiFinal.eCommerce.repositories.EnderecoRepository;
 
 @Service
@@ -17,6 +18,9 @@ public class EnderecoService {
 
 	@Autowired
 	EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	ClienteRepository clienteRepository;
 	
 	@Autowired
 	APIEnderecoDTO apiEnderecoDTO;
@@ -37,6 +41,9 @@ public class EnderecoService {
 				endereco.setCidade(enderecoDTO.getLocalidade());
 				endereco.setRua(enderecoDTO.getLogradouro());
 				endereco.setUf(enderecoDTO.getUf());
+				if(endereco.getComplemento() == null) {
+					endereco.setComplemento("S/C");
+				}
 				return enderecoRepository.save(endereco);
 			} catch (Exception e) {
 				throw new UniqueElementException();

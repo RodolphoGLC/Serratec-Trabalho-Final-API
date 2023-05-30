@@ -63,17 +63,17 @@ public class RelatorioPedidoDTO {
 		this.listaItems = listaItems;
 	}
 
-	public String notaFiscal(Pedido pedido) {
+	public String notaFiscal(PedidoDTO pedidoDTO) {
 		
 		String mensagem = "";
 		
 		mensagem += "==========================================" +
-					"\nId do pedido: " + pedido.getIdPedido() +
-					"\nData do pedido: " + pedido.getDataPedido() + 
-					"\nValor total: " + pedido.getValorTotal() + 
+					"\nId do pedido: " + pedidoDTO.getIdPedido() +
+					"\nData do pedido: " + pedidoDTO.getDataPedido() + 
+					"\nValor total: " + pedidoDTO.getValorTotal() + 
 					"\n==========================================";
 		
-		for(ItemPedido itemPedido : pedido.getListaItemPedido()) {
+		for(ItemPedido itemPedido : pedidoDTO.getListaItemPedido()) {
 			mensagem += "\nId do produto: " + itemPedido.getProduto() +
 					    "\nNome do produto: " + itemPedido.getProduto().getNome() + 
 					    "\nPreço venda: " + itemPedido.getProduto().getValorUnitario() + 

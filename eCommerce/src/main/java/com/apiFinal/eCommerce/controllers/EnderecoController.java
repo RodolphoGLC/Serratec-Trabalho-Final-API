@@ -53,6 +53,5 @@ public class EnderecoController {
 		} else {
 			return new ResponseEntity<>(resp,HttpStatus.NOT_MODIFIED);
 		}
-	}
-	
+	}	
 }

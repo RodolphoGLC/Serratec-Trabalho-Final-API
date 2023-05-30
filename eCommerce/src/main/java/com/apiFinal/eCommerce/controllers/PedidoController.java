@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.apiFinal.eCommerce.dto.RealizarPedidoDTO;
 import com.apiFinal.eCommerce.entities.Pedido;
-import com.apiFinal.eCommerce.services.CamadaClienteService;
 import com.apiFinal.eCommerce.services.PedidoService;
 
 import jakarta.validation.Valid;
@@ -27,8 +25,6 @@ public class PedidoController {
 	@Autowired
 	PedidoService pedidoService ;
 	
-	@Autowired
-	CamadaClienteService camadaClienteService;
 
 	@GetMapping
 	public ResponseEntity<List<Pedido>> getAllPedidos() {
@@ -39,17 +35,6 @@ public class PedidoController {
 	public ResponseEntity<Pedido> getPedidoById(@Valid @PathVariable Integer id) {
 		return new ResponseEntity<>(pedidoService.getPedidoById(id),HttpStatus.OK);
 	}
-	
-//	@PostMapping("/carrinho")
-//	public ResponseEntity<Boolean> fazerPedido(@Valid @RequestBody List<RealizarPedidoDTO> lista, Integer idCliente) {
-//		Boolean check = camadaClienteService.fazerPedido(lista, idCliente);
-//		if (check == true) {
-//			return new ResponseEntity<>(camadaClienteService.fazerPedido(lista, idCliente), HttpStatus.CREATED);
-//			//Enviar email para cliente
-//		} else {
-//			return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-//		}
-//	}
 	
 	@PostMapping
 	public ResponseEntity<Pedido> savePedido(@Valid @RequestBody Pedido pedido) {

@@ -3,6 +3,8 @@ package com.apiFinal.eCommerce.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -15,6 +17,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
@@ -29,22 +33,23 @@ public class Cliente {
 	@Column(name = "id_cliente")
 	private Integer idCliente;
 
-	@NotNull
+	@NotBlank(message = "Email não pode ser vazio.")
+	@Email(message = "Email inválido.")
 	@Column(name = "email", unique = true)
 	private String email;
 	
-	@NotNull
+	@NotNull(message = "CPF não pode ser vazio.")
 	@Column(name = "cpf", unique = true)
-	@Pattern(regexp = "^[0-9]{11}")
+	@CPF(message = "CPF inválido.")
 	private String cpf;
 	
-	@NotNull
+	@NotBlank(message = "Telefone não pode ser vazio.")
 	@Column(name = "telefone")
 	@Pattern(regexp = "^[0-9]{10,15}")
 	private String telefone;
 	
-	@NotNull
-	@PastOrPresent
+	@NotNull(message = "Data de nascimento não pode ser vazia.")
+	@PastOrPresent(message = "Data deve ser do passado.")
 	@Column(name = "data_nascimento")
 	private LocalDateTime dataNascimento;
 

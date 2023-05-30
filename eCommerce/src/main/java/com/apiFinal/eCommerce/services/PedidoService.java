@@ -11,6 +11,7 @@ import com.apiFinal.eCommerce.entities.Pedido;
 import com.apiFinal.eCommerce.exceptions.NoSuchElementException;
 import com.apiFinal.eCommerce.exceptions.UniqueElementException;
 import com.apiFinal.eCommerce.exceptions.UnmatchingIdsException;
+import com.apiFinal.eCommerce.repositories.ItemPedidoRepository;
 import com.apiFinal.eCommerce.repositories.PedidoRepository;
 
 @Service
@@ -20,10 +21,14 @@ public class PedidoService {
 	PedidoRepository pedidoRepository;
 	
 	@Autowired
+	ItemPedidoRepository itemPedidoRepository;
+	
+	@Autowired
 	EmailService emailService;
 	
 	@Autowired
 	RelatorioPedidoService relatorioPedidoService;
+	
 	
 	public List<Pedido> getAllPedidos() {
 		return pedidoRepository.findAll();
@@ -35,21 +40,18 @@ public class PedidoService {
 	
 	public Pedido savePedido(Pedido pedido) {
 		if (pedido.getIdPedido() == null) {
-			try {
 				pedido.setStatus("separação");
 				LocalDateTime data = LocalDateTime.now();
 				pedido.setDataPedido(data);
 				Double valor = 0.0;
 				if(pedido.getListaItemPedido() != null) {
 					for(ItemPedido itemPedido: pedido.getListaItemPedido()) {
-						valor += itemPedido.getValorLiquido();
+						ItemPedido itemPedidoCheck = itemPedidoRepository.findById(itemPedido.getIdItemPedido()).orElseThrow(() -> new NoSuchElementException("itemPedido", itemPedido.getIdItemPedido()));
+						valor += itemPedidoCheck.getValorLiquido();
 					}					
 				}
 				pedido.setValorTotal(valor);
 				return pedidoRepository.save(pedido);		
-			} catch (Exception e) {
-				throw new UniqueElementException();
-			}
 		} else {
 			throw new UnmatchingIdsException(pedido.getIdPedido(), pedido.getStatus());
 		}

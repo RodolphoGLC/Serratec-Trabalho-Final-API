@@ -1,7 +1,6 @@
 package com.apiFinal.eCommerce.dto;
 
 public class ItemPedidoDTO {
-	//Itens Pedido
 	
 	private Integer idProduto;
 	private String nomeProduto;

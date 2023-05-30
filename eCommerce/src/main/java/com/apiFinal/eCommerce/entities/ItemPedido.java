@@ -11,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idItemPedido", scope = ItemPedido.class)
 @Entity
@@ -22,20 +24,22 @@ public class ItemPedido {
 	@Column(name = "id_item_pedido")
 	private Integer idItemPedido;
 	
+	@NotNull(message = "A quantidade não pode ser nula.")
+	@Min(value = 1, message = "A quantidade deve ser um valor inteiro maior ou igual a 1")
 	@Column(name = "quantidade")
 	private Integer quantidade;
 	
 	@Column(name = "preco_venda")
-	private double precoVenda;
+	private Double precoVenda;
 	
 	@Column(name = "porcentagem_desconto")
-	private double porcentagemDesconto;
+	private Double porcentagemDesconto;
 	
 	@Column(name = "valor_bruto")
-	private double valorBruto;
+	private Double valorBruto;
 	
 	@Column(name = "valor_liquido")
-	private double valorLiquido;
+	private Double valorLiquido;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido")
@@ -61,35 +65,35 @@ public class ItemPedido {
 		this.quantidade = quantidade;
 	}
 
-	public double getPrecoVenda() {
+	public Double getPrecoVenda() {
 		return precoVenda;
 	}
 
-	public void setPrecoVenda(double precoVenda) {
+	public void setPrecoVenda(Double precoVenda) {
 		this.precoVenda = precoVenda;
 	}
 
-	public double getPorcentagemDesconto() {
+	public Double getPorcentagemDesconto() {
 		return porcentagemDesconto;
 	}
 
-	public void setPorcentagemDesconto(double porcentagemDesconto) {
+	public void setPorcentagemDesconto(Double porcentagemDesconto) {
 		this.porcentagemDesconto = porcentagemDesconto;
 	}
 
-	public double getValorBruto() {
+	public Double getValorBruto() {
 		return valorBruto;
 	}
 
-	public void setValorBruto(double valorBruto) {
+	public void setValorBruto(Double valorBruto) {
 		this.valorBruto = valorBruto;
 	}
 
-	public double getValorLiquido() {
+	public Double getValorLiquido() {
 		return valorLiquido;
 	}
 
-	public void setValorLiquido(double valorLiquido) {
+	public void setValorLiquido(Double valorLiquido) {
 		this.valorLiquido = valorLiquido;
 	}
 

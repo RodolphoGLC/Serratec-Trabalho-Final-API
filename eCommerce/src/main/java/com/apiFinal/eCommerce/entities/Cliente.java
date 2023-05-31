@@ -3,6 +3,8 @@ package com.apiFinal.eCommerce.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -38,6 +40,7 @@ public class Cliente {
 	
 	@NotNull(message = "CPF não pode ser vazio.")
 	@Column(name = "cpf", unique = true)
+	@CPF
 	private String cpf;
 	
 	@NotBlank(message = "Telefone não pode ser vazio.")

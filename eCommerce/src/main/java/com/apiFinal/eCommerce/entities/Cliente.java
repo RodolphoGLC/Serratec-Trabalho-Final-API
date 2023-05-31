@@ -35,11 +35,11 @@ public class Cliente {
 
 	@NotBlank(message = "Email não pode ser vazio.")
 	@Email(message = "Email inválido.")
-	@Column(name = "email", unique = true)
+	@Column(name = "email")
 	private String email;
 	
 	@NotNull(message = "CPF não pode ser vazio.")
-	@Column(name = "cpf", unique = true)
+	@Column(name = "cpf")
 	@CPF
 	private String cpf;
 	

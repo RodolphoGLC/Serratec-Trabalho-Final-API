@@ -25,11 +25,11 @@ public class Categoria {
 	private Integer idCategoria; 
 	
 	@NotNull(message = "Nome da categoria não pode ser nulo.")
-	@Column(name = "nome", unique = true)
+	@Column(name = "nome")
 	private String nome;
 	
 	@NotNull(message = "Descrição da categoria não pode ser nula.")
-	@Column(name = "descricao", unique = true)
+	@Column(name = "descricao")
 	private String descricao;
 	
 	@OneToMany(mappedBy = "categoria")

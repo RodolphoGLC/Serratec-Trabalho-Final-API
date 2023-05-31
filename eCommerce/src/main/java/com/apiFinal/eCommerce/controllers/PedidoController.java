@@ -42,7 +42,7 @@ public class PedidoController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<Pedido> updatePedido(@Valid @RequestBody Pedido pedido, @Valid Integer id) {
+	public ResponseEntity<Pedido> updatePedido(@Valid @RequestBody Pedido pedido) {
 		return new ResponseEntity<>(pedidoService.updatePedido(pedido),HttpStatus.CREATED);
 	}
 	

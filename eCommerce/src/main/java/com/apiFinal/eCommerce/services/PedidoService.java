@@ -114,6 +114,8 @@ public class PedidoService {
 			throw new UnmatchingIdsException();
 		} else {
 			if (pedidoRepository.findById(id).orElse(null) != null) {
+				Pedido pt = pedidoRepository.findById(id).orElse(null);
+				pedido.setDataPedido(pt.getDataPedido());
 				try {
 					return pedidoRepository.save(pedido);		
 				} catch (Exception e) {

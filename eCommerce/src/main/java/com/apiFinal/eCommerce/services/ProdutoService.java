@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.apiFinal.eCommerce.dto.ImagemUtilDTO;
+import com.apiFinal.eCommerce.entities.Categoria;
 import com.apiFinal.eCommerce.entities.Produto;
 import com.apiFinal.eCommerce.exceptions.NoSuchElementException;
 import com.apiFinal.eCommerce.exceptions.UniqueElementException;
@@ -42,7 +42,10 @@ public class ProdutoService {
 				produto.setDescricao(descricao);
 				produto.setQtdEstoque(qtdEstoque);
 				produto.setValorUnitario(valorUnitario);
-				produto.setCategoria(categoriaRepository.findById(idCategoria).orElse(null));
+				if(categoriaRepository.findById(idCategoria).orElse(null) != null) {
+					Categoria categoria = categoriaRepository.findById(idCategoria).orElse(null);
+					produto.setCategoria(categoria);
+				}
 				produto.setDataCadastro(LocalDateTime.now());
 				try {
 					byte[] img = null;
@@ -64,7 +67,7 @@ public class ProdutoService {
 		if (idProduto == null) {
 			throw new UnmatchingIdsException();
 		} else {
-			Produto produto = new Produto();
+			Produto produto = produtoRepository.findById(idProduto).orElse(null);
 			if (produtoRepository.findById(idProduto).orElse(null) != null) {
 				try {
 					produto.setNome(nome);

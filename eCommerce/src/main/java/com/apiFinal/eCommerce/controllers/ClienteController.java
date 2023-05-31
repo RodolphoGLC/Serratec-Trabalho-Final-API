@@ -42,7 +42,7 @@ public class ClienteController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<Cliente> updateCliente(@Valid @RequestBody Cliente cliente, @Valid Integer id) {
+	public ResponseEntity<Cliente> updateCliente(@Valid @RequestBody Cliente cliente) {
 		return new ResponseEntity<>(clienteService.updateCliente(cliente),HttpStatus.CREATED);
 	}
 	

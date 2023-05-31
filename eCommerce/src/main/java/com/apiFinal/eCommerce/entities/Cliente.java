@@ -40,7 +40,6 @@ public class Cliente {
 	
 	@NotNull(message = "CPF não pode ser vazio.")
 	@Column(name = "cpf", unique = true)
-	@CPF(message = "CPF inválido.")
 	private String cpf;
 	
 	@NotBlank(message = "Telefone não pode ser vazio.")
@@ -48,7 +47,7 @@ public class Cliente {
 	@Pattern(regexp = "^[0-9]{10,15}")
 	private String telefone;
 	
-	@NotNull(message = "Data de nascimento não pode ser vazia.")
+	//@NotNull(message = "Data de nascimento não pode ser vazia.")
 	@PastOrPresent(message = "Data deve ser do passado.")
 	@Column(name = "data_nascimento")
 	private LocalDateTime dataNascimento;

@@ -44,6 +44,8 @@ public class ClienteService {
 		} else {
 			if (clienteRepository.findById(id).orElse(null) != null) {
 				try {
+					Cliente ct = clienteRepository.findById(id).orElse(null);
+					cliente.setDataNascimento(ct.getDataNascimento());
 					return clienteRepository.save(cliente);
 				} catch (Exception e) {
 					throw new UniqueElementException();

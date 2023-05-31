@@ -38,7 +38,7 @@ public class Produto {
 	private String nome;
 	
 	@NotBlank
-	@Column(name = "descricao", unique = true)
+	@Column(name = "descricao")
 	private String descricao;
 	
 	@NotNull(message = "A quantidade do estoque deve ser um valor inteiro maior que zero.")

@@ -34,7 +34,8 @@ public class ItemPedidoService {
 	
 	public ItemPedido saveItemPedido(ItemPedido itemPedido) {
 		if (itemPedido.getIdItemPedido() == null) {
-			Produto produto = produtoRepository.findById(itemPedido.getProduto().getIdProduto()).orElse(null);
+			Integer idProduto = itemPedido.getProduto().getIdProduto();
+			Produto produto = produtoRepository.findById(idProduto).orElse(null);
 			if(produto.getQtdEstoque() >= itemPedido.getQuantidade()) {
 				itemPedido.setValorBruto(itemPedido.getQuantidade() * produto.getValorUnitario());
 				itemPedido.setValorLiquido(itemPedido.getValorBruto()*(1-itemPedido.getPorcentagemDesconto()));

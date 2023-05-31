@@ -1,48 +1,36 @@
 package com.apiFinal.eCommerce.dto;
 
-import jakarta.validation.constraints.Min;
+import java.util.List;
+
 import jakarta.validation.constraints.NotNull;
 
 public class RealizarPedidoDTO {
 	
-	@NotNull	
-	private Integer idProduto;
-	
-	@NotNull
-	@Min(1)
-	private Integer quantidade;
-	
-	private Double porcentagemDesconto;
-	
 	@NotNull
 	private Integer idCliente;
+	
+	private List<ProdutoPedidoDTO> listaProdutoPedidoDTO;
 
 	public RealizarPedidoDTO() {
 		super();
 	}
 
-	public Integer getIdProduto() {
-		return idProduto;
-	}
-
-	public void setIdProduto(Integer idProduto) {
-		this.idProduto = idProduto;
-	}
-
-	public Integer getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
-	}
-	//Ver com o professor
-	public Double getPorcentagemDesconto() {
-		return porcentagemDesconto;
-	}
-
-	public void setPorcentagemDesconto(Double porcentagemDesconto) {
-		this.porcentagemDesconto = porcentagemDesconto;
-	}
 	
+	public Integer getIdCliente() {
+		return idCliente;
+	}
+
+
+	public void setIdCliente(Integer idCliente) {
+		this.idCliente = idCliente;
+	}
+
+
+	public List<ProdutoPedidoDTO> getListaProdutoPedidoDTO() {
+		return listaProdutoPedidoDTO;
+	}
+
+	public void setListaProdutoPedidoDTO(List<ProdutoPedidoDTO> listaProdutoPedidoDTO) {
+		this.listaProdutoPedidoDTO = listaProdutoPedidoDTO;
+	}	
 }

@@ -3,6 +3,9 @@ package com.apiFinal.eCommerce.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -12,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -51,6 +55,10 @@ public class Produto {
 	private Double valorUnitario;
 	
 	//Imagem, tenho que pesquisar
+	@Lob
+	@JdbcTypeCode(SqlTypes.BINARY)
+	@Column(name = "image_data", length = 200)
+	private byte[] image;
 	
 	@OneToMany(mappedBy = "produto")
 	private List<ItemPedido> itemPedido;
@@ -122,4 +130,14 @@ public class Produto {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+	
+	
 }
